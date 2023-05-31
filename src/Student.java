@@ -12,7 +12,7 @@ public class Student {
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -20,7 +20,7 @@ public class Student {
     }
 
     public String getMatricNo() {
-        return this.matricNo;
+        return matricNo;
     }
 
     public void setMatricNo(String matricNo) {
@@ -28,7 +28,7 @@ public class Student {
     }
 
     public Subject[] getSubjects() {
-        return this.subjects;
+        return subjects;
     }
 
     public void setSubjects(Subject[] subjects) {
