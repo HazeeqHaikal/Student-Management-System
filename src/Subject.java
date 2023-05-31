@@ -9,7 +9,6 @@ public class Subject {
         this.subMarks = subMarks;
     }
 
-
     public String getSubName() {
         return this.subName;
     }
@@ -52,7 +51,30 @@ public class Subject {
         return grade;
     }
 
-    public String toString(){
+    public double calcAverage(Subject[] subjects) {
+        double average = 0;
+        double total = 0;
+
+        for (int i = 0; i < subjects.length; i++) {
+            total += subjects[i].getSubMarks();
+        }
+
+        average = total / subjects.length;
+
+        return average;
+    }
+
+    public double calcTotal(Subject[] subjects) {
+        double total = 0;
+
+        for (int i = 0; i < subjects.length; i++) {
+            total += subjects[i].getSubMarks();
+        }
+
+        return total;
+    }
+
+    public String toString() {
         return "Subject Name: " + subName + "\nSubject Code: " + subCode + "\nSubject Marks: " + subMarks;
     }
 }
