@@ -22,7 +22,7 @@ import java.util.Scanner;
 //         System.out.println("Roll Number: " + getRollNumber());
 //         System.out.println("Marks: " + getMarks());
 //     }
-}
+// }
 
 // Concrete class implementing Student
 // class DistanceLearningStudent extends Student {
@@ -47,20 +47,21 @@ import java.util.Scanner;
 // }
 
 // Main class to demonstrate the student management system
-public class StudentManagementSystem {
+public class Main {
     public static void main(String[] args) {
-        List<Student> students = new ArrayList<>();
+        // List<Student> students = new ArrayList<>();
 
         // RegularStudent regularStudent = new RegularStudent("John Doe", 101, 85.5);
-        // DistanceLearningStudent distanceLearningStudent = new DistanceLearningStudent("Jane Smith", 102, true);
+        // DistanceLearningStudent distanceLearningStudent = new
+        // DistanceLearningStudent("Jane Smith", 102, true);
 
         // students.add(regularStudent);
         // students.add(distanceLearningStudent);
 
         // Display student details
         // for (Student student : students) {
-        //     student.displayDetails();
-        //     System.out.println();
+        // student.displayDetails();
+        // System.out.println();
         // }
 
         // Modify student details
@@ -69,8 +70,8 @@ public class StudentManagementSystem {
 
         // Display modified student details
         // for (Student student : students) {
-            // student.displayDetails();
-        //     System.out.println();
+        // student.displayDetails();
+        // System.out.println();
         // }
     }
 }
