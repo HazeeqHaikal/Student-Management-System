@@ -1,16 +1,20 @@
-public class Student {
+public class Student extends Subject {
+    // attributes
     private String name;
     private String matricNo;
     private Subject[] subjects = new Subject[5];
 
-    public Student(String name, String matricNo, Subject[] subjects) {
+    // normal constructor
+    public Student(String name, String matricNo, Subject[] subjects, String subName, String subCode, int subMarks) {
+        super(subName, subCode, subMarks);
         this.name = name;
         this.matricNo = matricNo;
-        for(int i = 0; i < subjects.length; i++){
+        for (int i = 0; i < subjects.length; i++) {
             this.subjects[i] = subjects[i];
         }
     }
 
+    // getter and setter
     public String getName() {
         return name;
     }
@@ -35,9 +39,10 @@ public class Student {
         this.subjects = subjects;
     }
 
-    public String toString(){
+    // where output is generated
+    public String toString() {
         String joinSubject = "";
-        for(int i = 0; i < subjects.length; i++){
+        for (int i = 0; i < subjects.length; i++) {
             joinSubject += subjects[i].toString() + "\n";
         }
         return "Name: " + name + "\nMatric No: " + matricNo + "\nSubjects: " + joinSubject;

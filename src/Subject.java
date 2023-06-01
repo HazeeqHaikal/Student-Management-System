@@ -1,14 +1,17 @@
 public class Subject {
+    // attributes
     private String subName;
     private String subCode;
     private int subMarks;
 
+    // normal constructor
     public Subject(String subName, String subCode, int subMarks) {
         this.subName = subName;
         this.subCode = subCode;
         this.subMarks = subMarks;
     }
 
+    // getter and setter
     public String getSubName() {
         return this.subName;
     }
@@ -33,6 +36,7 @@ public class Subject {
         this.subMarks = subMarks;
     }
 
+    // methods
     public char calculateGrade() {
         char grade = '\u0000';
 
@@ -74,6 +78,7 @@ public class Subject {
         return total;
     }
 
+    // where output is formatted
     public String toString() {
         return "Subject Name: " + subName + "\nSubject Code: " + subCode + "\nSubject Marks: " + subMarks;
     }

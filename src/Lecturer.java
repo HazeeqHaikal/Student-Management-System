@@ -1,20 +1,26 @@
-public class Lecturer {
+public class Lecturer extends Subject {
+    // attributes
     private String name;
     private String staffId;
     private Subject[] subjects = new Subject[5];
     private Student[] students = new Student[15];
 
-    public Lecturer(String name, String staffId, Subject[] subjects, Student[] students) {
+    // normal constructor
+    public Lecturer(String name, String staffId, Subject[] subjects, Student[] students, String subName,
+            String subCode, int subMarks) {
+                
+        super(subName, subCode, subMarks);
         this.name = name;
         this.staffId = staffId;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < subjects.length; i++) {
             this.subjects[i] = subjects[i];
         }
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < students.length; i++) {
             this.students[i] = students[i];
         }
     }
 
+    // getter and setter
     public String getName() {
         return name;
     }
@@ -47,9 +53,20 @@ public class Lecturer {
         this.students = students;
     }
 
-    @Override
+    // where output is generated
     public String toString() {
-        return "Name: " + name + "\nStaff ID: " + staffId + "\nSubjects: " + subjects + "\nStudents: " + students;
+        String joinSubject = "";
+        String joinStudent = "";
+
+        for (int i = 0; i < subjects.length; i++) {
+            joinSubject += subjects[i].toString() + "\n";
+        }
+
+        for (int i = 0; i < students.length; i++) {
+            joinStudent += students[i].toString() + "\n";
+        }
+
+        return "Name: " + name + "\nStaff ID: " + staffId + "\nSubjects: " + joinSubject + "\nStudents: " + joinStudent;
     }
 
 }
