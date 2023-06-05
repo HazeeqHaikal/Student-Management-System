@@ -1,38 +1,42 @@
 public class Subject {
     // attributes
-    private String subName;
-    private String subCode;
-    private int subMarks;
+    // private String subName;
+    // private String subCode;
+    private double subMarks;
 
     // normal constructor
-    public Subject(String subName, String subCode, int subMarks) {
-        this.subName = subName;
-        this.subCode = subCode;
+    public Subject(double subMarks) {
         this.subMarks = subMarks;
     }
 
+    // public Subject(String subName, String subCode, int subMarks) {
+    // this.subName = subName;
+    // this.subCode = subCode;
+    // this.subMarks = subMarks;
+    // }
+
     // getter and setter
-    public String getSubName() {
-        return this.subName;
-    }
+    // public String getSubName() {
+    // return this.subName;
+    // }
 
-    public void setSubName(String subName) {
-        this.subName = subName;
-    }
+    // public void setSubName(String subName) {
+    // this.subName = subName;
+    // }
 
-    public String getSubCode() {
-        return this.subCode;
-    }
+    // public String getSubCode() {
+    // return this.subCode;
+    // }
 
-    public void setSubCode(String subCode) {
-        this.subCode = subCode;
-    }
+    // public void setSubCode(String subCode) {
+    // this.subCode = subCode;
+    // }
 
-    public int getSubMarks() {
+    public double getSubMarks() {
         return this.subMarks;
     }
 
-    public void setSubMarks(int subMarks) {
+    public void setSubMarks(double subMarks) {
         this.subMarks = subMarks;
     }
 
@@ -55,31 +59,36 @@ public class Subject {
         return grade;
     }
 
-    public double calcAverage(Subject[] subjects) {
-        double average = 0;
-        double total = 0;
+    // public double calcAverage(Subject[] subjects) {
+    //     double average = 0;
+    //     double total = 0;
 
-        for (int i = 0; i < subjects.length; i++) {
-            total += subjects[i].getSubMarks();
-        }
+    //     for (int i = 0; i < subjects.length; i++) {
+    //         total += subjects[i].getSubMarks();
+    //     }
 
-        average = total / subjects.length;
+    //     average = total / subjects.length;
 
-        return average;
-    }
+    //     return average;
+    // }
 
-    public double calcTotal(Subject[] subjects) {
-        double total = 0;
+    // public double calcTotal(Subject[] subjects) {
+    //     double total = 0;
 
-        for (int i = 0; i < subjects.length; i++) {
-            total += subjects[i].getSubMarks();
-        }
+    //     for (int i = 0; i < subjects.length; i++) {
+    //         total += subjects[i].getSubMarks();
+    //     }
 
-        return total;
-    }
+    //     return total;
+    // }
 
     // where output is formatted
+    // public String toString() {
+    // return "Subject Name: " + subName + "\nSubject Code: " + subCode + "\nSubject
+    // Marks: " + subMarks;
+    // }
+
     public String toString() {
-        return "Subject Name: " + subName + "\nSubject Code: " + subCode + "\nSubject Marks: " + subMarks;
+        return "Subject Marks: " + subMarks;
     }
 }
