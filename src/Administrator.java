@@ -3,7 +3,7 @@ import java.util.*;
 
 import javax.crypto.SecretKey;
 
-public class Lecturer {
+public class Administrator {
     // attributes
     private Student[] students;
     // private PasswordDecryption passwordDecryption = null;
@@ -14,14 +14,10 @@ public class Lecturer {
     private String password;
 
     // normal constructor
-    public Lecturer(String staffId, String password) {
+    public Administrator(String staffId, String password) {
         this.staffId = staffId;
         this.password = password;
     }
-
-    // public Student[] getStudents() {
-    // return students;
-    // }
 
     // getter and setter methods
     public String getPassword() {
@@ -40,13 +36,6 @@ public class Lecturer {
         this.staffId = staffId;
     }
 
-    public void setStudents(Student[] students) {
-        this.students = new Student[students.length];
-        for (int i = 0; i < students.length; i++) {
-            this.students[i] = students[i];
-        }
-    }
-
     public String getDecryptedPassword() {
         try {
             // passwordDecryption = new PasswordDecryption(getPassword(), getSecretKey());
@@ -57,6 +46,20 @@ public class Lecturer {
         }
         // return passwordDecryption.getDecryptedPassword();
         return passwordManager.getDecryptedPassword();
+    }
+
+    public void setStudents(Student[] students) {
+        this.students = new Student[students.length];
+        for (int i = 0; i < students.length; i++) {
+            this.students[i] = students[i];
+        }
+    }
+
+    public String getSecretKey() throws IOException {
+        // SecretKey encodedKey = passwordEncryption.getSecretKey();
+        SecretKey encodedKey = passwordManager.getSecretKey();
+        String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
+        return secretKey;
     }
 
     public String getEncryptedPassword() {
@@ -72,15 +75,7 @@ public class Lecturer {
         return passwordManager.getEncryptedPassword();
     }
 
-    // method to get secret key from passwordEncryption
-    public String getSecretKey() throws IOException {
-        // SecretKey encodedKey = passwordEncryption.getSecretKey();
-        SecretKey encodedKey = passwordManager.getSecretKey();
-        String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
-        return secretKey;
-    }
-
-    // method to create password
+    // processor
     public String createPassword() {
         try {
             // passwordEncryption = new PasswordEncryption(password);
@@ -97,10 +92,9 @@ public class Lecturer {
         return passwordManager.getEncryptedPassword() + ";" + secretKey;
     }
 
-    // method to create lecturer account
-    public void createLecturerAcc(String name) throws IOException {
+    public void createAdminAcc(String name) throws IOException {
         try {
-            PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
+            PrintWriter pw = new PrintWriter(new FileWriter("database/administrator.txt", true));
             // pw.println(name + ";" + staffId + ";" + getEncryptedPassword() + ";" +
             // getSecretKey());
             pw.println(name + ";" + staffId + ";" + createPassword() + "\n");
@@ -111,29 +105,11 @@ public class Lecturer {
         }
     }
 
-    public double calcAverageMarks() {
-        double totalMarks = 0;
-        for (int i = 0; i < students.length; i++) {
-            // totalMarks += students[i].getSubMarks();
-        }
-        return totalMarks / students.length;
-    }
-
-    public double calcTotalMarks() {
-        double totalMarks = 0;
-        for (int i = 0; i < students.length; i++) {
-            // totalMarks += students[i].getSubMarks();
-        }
-        return totalMarks;
-    }
-
     // where output is generated
     public String toString() {
         String output = "";
         output += "Staff ID: " + staffId + "\n";
         output += "Password: " + password;
-        // output += "Total Marks: " + calcTotalMarks() + "\n";
-        // output += "Average Marks: " + calcAverageMarks() + "\n";
         // output += "Student List: \n";
         // for (int i = 0; i < students.length; i++) {
         // output += students[i].generateOutput() + "\n";
