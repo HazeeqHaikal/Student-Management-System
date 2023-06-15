@@ -1,21 +1,19 @@
 import java.io.*;
-import java.util.*;
-
-import javax.crypto.SecretKey;
+// import java.util.*;
+// import javax.crypto.SecretKey;
 
 public class Lecturer extends User {
+    
     // attributes
     private Student[] students;
-    // private PasswordDecryption passwordDecryption = null;
-    // private PasswordEncryption passwordEncryption = null;
     private PasswordManager passwordManager = null;
-    // private String name;
     private String staffId;
     private String password;
 
     // normal constructor
-    public Lecturer(String staffId, String password) {
+    public Lecturer(String staffId, String password) throws Exception {
         super(staffId, password);
+        this.passwordManager = new PasswordManager(password);
     }
 
     // public Student[] getStudents() {
@@ -46,68 +44,80 @@ public class Lecturer extends User {
         }
     }
 
-    public String getDecryptedPassword() {
-        try {
-            // passwordDecryption = new PasswordDecryption(getPassword(), getSecretKey());
-            passwordManager = new PasswordManager(getPassword());
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-        }
-        // return passwordDecryption.getDecryptedPassword();
-        return passwordManager.getDecryptedPassword();
-    }
+    // public String getDecryptedPassword() {
+    //     try {
+    //         // passwordDecryption = new PasswordDecryption(getPassword(), getSecretKey());
+    //         passwordManager = new PasswordManager(getPassword());
+    //     } catch (Exception e) {
+    //         System.out.println("Error: " + e.getMessage());
+    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
+    //     }
+    //     // return passwordDecryption.getDecryptedPassword();
+    //     return passwordManager.getDecryptedPassword();
+    // }
 
-    public String getEncryptedPassword() {
-        try {
-            // passwordEncryption = new PasswordEncryption(password);
-            passwordManager = new PasswordManager(password);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-        }
+    // public String getEncryptedPassword() {
+    //     try {
+    //         // passwordEncryption = new PasswordEncryption(password);
+    //         passwordManager = new PasswordManager(password);
+    //     } catch (Exception e) {
+    //         System.out.println("Error: " + e.getMessage());
+    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
+    //     }
 
-        // return passwordEncryption.getEncryptedPassword();
-        return passwordManager.getEncryptedPassword();
-    }
+    //     // return passwordEncryption.getEncryptedPassword();
+    //     return passwordManager.getEncryptedPassword();
+    // }
 
     // method to get secret key from passwordEncryption
-    public String getSecretKey() throws IOException {
-        // SecretKey encodedKey = passwordEncryption.getSecretKey();
-        SecretKey encodedKey = passwordManager.getSecretKey();
-        String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
-        return secretKey;
-    }
+    // public String getSecretKey() throws IOException {
+    //     // SecretKey encodedKey = passwordEncryption.getSecretKey();
+    //     SecretKey encodedKey = passwordManager.getSecretKey();
+    //     String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
+    //     return secretKey;
+    // }
 
     // method to create password
-    public String createPassword() {
-        try {
-            // passwordEncryption = new PasswordEncryption(password);
-            passwordManager = new PasswordManager(password);
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-        }
+    // public String createPassword() {
+    //     try {
+    //         // passwordEncryption = new PasswordEncryption(password);
+    //         passwordManager = new PasswordManager(password);
+    //     } catch (Exception e) {
+    //         System.out.println("Error: " + e.getMessage());
+    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
+    //     }
 
-        // SecretKey encodedKey = passwordEncryption.getSecretKey();
-        SecretKey encodedKey = passwordManager.getSecretKey();
-        String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
-        // return passwordEncryption.getEncryptedPassword() + ";" + secretKey;
-        return passwordManager.getEncryptedPassword() + ";" + secretKey;
-    }
+    //     // SecretKey encodedKey = passwordEncryption.getSecretKey();
+    //     SecretKey encodedKey = passwordManager.getSecretKey();
+    //     String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
+    //     // return passwordEncryption.getEncryptedPassword() + ";" + secretKey;
+    //     return passwordManager.getEncryptedPassword() + ";" + secretKey;
+    // }
 
     // method to create lecturer account
-    public void createLecturerAcc(String name) throws IOException {
+    // public void createLecturerAcc(String name) throws IOException {
+    //     try {
+    //         PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
+    //         // pw.println(name + ";" + staffId + ";" + getEncryptedPassword() + ";" +
+    //         // getSecretKey());
+    //         pw.println(name + ";" + staffId + ";" + createPassword() + "\n");
+    //         pw.close();
+    //     } catch (Exception e) {
+    //         System.out.println("Error: " + e.getMessage());
+    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
+    //     }
+    // }
+
+    // polymorphism
+    @Override
+    public void createAccount(String name) throws IOException {
+        PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
         try {
-            PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
-            // pw.println(name + ";" + staffId + ";" + getEncryptedPassword() + ";" +
-            // getSecretKey());
-            pw.println(name + ";" + staffId + ";" + createPassword() + "\n");
-            pw.close();
+            pw.println(name + ";" + staffId + ";" + passwordManager.createPassword());
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-            System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
+            e.printStackTrace();
         }
+        pw.close();
     }
 
     public double calcAverageMarks() {
@@ -126,18 +136,16 @@ public class Lecturer extends User {
         return totalMarks;
     }
 
-    // where output is generated
+    // dynamic polymorphism
+    @Override
     public String toString() {
-        String output = "";
-        output += "Staff ID: " + staffId + "\n";
-        output += "Password: " + password;
+        return "Staff " + super.toString();
         // output += "Total Marks: " + calcTotalMarks() + "\n";
         // output += "Average Marks: " + calcAverageMarks() + "\n";
         // output += "Student List: \n";
         // for (int i = 0; i < students.length; i++) {
         // output += students[i].generateOutput() + "\n";
         // }
-        return output;
     }
 
 }

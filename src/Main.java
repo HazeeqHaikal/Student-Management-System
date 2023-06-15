@@ -110,6 +110,9 @@ public class Main {
                     System.out.println("\nAll lecturer's password\n");
                     System.out.println(passwordManager.getAllLecturersPassword());
                 } else if (choice == 3) {
+                    System.out.println("Enter the admin's name: ");
+                    String adminName = strInput.nextLine();
+
                     System.out.print("\nEnter the admin's ID: ");
                     String adminID = strInput.nextLine();
 
@@ -143,8 +146,9 @@ public class Main {
                     }
 
                     // create admin account
-                    Administrator admin = new Administrator (adminID, adminPassword);
-                    admin.createAdminAcc(data[0]);
+                    Administrator admin = new Administrator(adminID, adminPassword);
+                    // admin.createAdminAcc(data[0]);
+                    admin.createAccount(adminName);
                     System.out.println("\nAccount created successfully!");
                     System.out.println();
                     System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
@@ -211,10 +215,12 @@ public class Main {
             // creating student or lecturer account
             if (userType == 'S') {
                 Student student = new Student(ID, password);
-                student.createStudentAcc(name);
+                // student.createStudentAcc(name);
+                student.createAccount(name);
             } else if (userType == 'L') {
                 Lecturer lecturer = new Lecturer(ID, password);
-                lecturer.createLecturerAcc(name);
+                // lecturer.createLecturerAcc(name);
+                lecturer.createAccount(name);
             }
 
             System.out.println("\nAccount created successfully!");

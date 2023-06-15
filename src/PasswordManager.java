@@ -10,6 +10,7 @@ import java.io.*;
 import java.util.*;
 
 public class PasswordManager {
+    
     // salt for key derivation
     private static final byte[] SALT = "12345678".getBytes();
     // iteration count for key derivation
@@ -257,6 +258,13 @@ public class PasswordManager {
             admin.close();
         }
         return data;
+    }
+
+
+    public String createPassword() throws Exception {
+        SecretKey encodedKey = getSecretKey();
+        String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
+        return getEncryptedPassword() + ";" + secretKey;
     }
 
     public boolean verifyPassword(String ID) throws Exception {
