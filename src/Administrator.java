@@ -3,7 +3,7 @@ import java.util.*;
 
 import javax.crypto.SecretKey;
 
-public class Administrator {
+public class Administrator extends User{
     // attributes
     private Student[] students;
     // private PasswordDecryption passwordDecryption = null;
@@ -15,8 +15,7 @@ public class Administrator {
 
     // normal constructor
     public Administrator(String staffId, String password) {
-        this.staffId = staffId;
-        this.password = password;
+        super(staffId, password);
     }
 
     // getter and setter methods

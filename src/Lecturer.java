@@ -3,7 +3,7 @@ import java.util.*;
 
 import javax.crypto.SecretKey;
 
-public class Lecturer {
+public class Lecturer extends User {
     // attributes
     private Student[] students;
     // private PasswordDecryption passwordDecryption = null;
@@ -15,8 +15,7 @@ public class Lecturer {
 
     // normal constructor
     public Lecturer(String staffId, String password) {
-        this.staffId = staffId;
-        this.password = password;
+        super(staffId, password);
     }
 
     // public Student[] getStudents() {

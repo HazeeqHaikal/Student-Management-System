@@ -4,7 +4,7 @@ import java.util.*;
 import javax.crypto.SecretKey;
 
 // public class Student extends Subject {
-public class Student {
+public class Student extends User {
     // attributes
     // private String[] studentInfo = new String[6];
     // private PasswordDecryption passwordDecryption = null;
@@ -17,8 +17,7 @@ public class Student {
     // public Student(String matricNo, String password, double subMarks) {
     // super(subMarks);
     public Student(String matricNo, String password) {
-        this.matricNo = matricNo;
-        this.password = password;
+        super(matricNo, password);
     }
 
     // public Student(String[] studentInfo, double subMarks) throws Exception {
