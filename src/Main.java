@@ -147,7 +147,6 @@ public class Main {
 
                     // create admin account
                     Administrator admin = new Administrator(adminID, adminPassword);
-                    // admin.createAdminAcc(data[0]);
                     admin.createAccount(adminName);
                     System.out.println("\nAccount created successfully!");
                     System.out.println();
@@ -215,11 +214,9 @@ public class Main {
             // creating student or lecturer account
             if (userType == 'S') {
                 Student student = new Student(ID, password);
-                // student.createStudentAcc(name);
                 student.createAccount(name);
             } else if (userType == 'L') {
                 Lecturer lecturer = new Lecturer(ID, password);
-                // lecturer.createLecturerAcc(name);
                 lecturer.createAccount(name);
             }
 
@@ -229,10 +226,10 @@ public class Main {
 
         }
 
-        // close the input
         System.out.print("Press enter to continue...");
         System.in.read();
 
+        // close the input
         intInput.close();
         strInput.close();
     }

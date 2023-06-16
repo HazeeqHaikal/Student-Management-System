@@ -3,9 +3,8 @@ import java.io.*;
 // import javax.crypto.SecretKey;
 
 public class Lecturer extends User {
-    
+
     // attributes
-    private Student[] students;
     private PasswordManager passwordManager = null;
     private String staffId;
     private String password;
@@ -15,10 +14,6 @@ public class Lecturer extends User {
         super(staffId, password);
         this.passwordManager = new PasswordManager(password);
     }
-
-    // public Student[] getStudents() {
-    // return students;
-    // }
 
     // getter and setter methods
     public String getPassword() {
@@ -37,77 +32,6 @@ public class Lecturer extends User {
         this.staffId = staffId;
     }
 
-    public void setStudents(Student[] students) {
-        this.students = new Student[students.length];
-        for (int i = 0; i < students.length; i++) {
-            this.students[i] = students[i];
-        }
-    }
-
-    // public String getDecryptedPassword() {
-    //     try {
-    //         // passwordDecryption = new PasswordDecryption(getPassword(), getSecretKey());
-    //         passwordManager = new PasswordManager(getPassword());
-    //     } catch (Exception e) {
-    //         System.out.println("Error: " + e.getMessage());
-    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-    //     }
-    //     // return passwordDecryption.getDecryptedPassword();
-    //     return passwordManager.getDecryptedPassword();
-    // }
-
-    // public String getEncryptedPassword() {
-    //     try {
-    //         // passwordEncryption = new PasswordEncryption(password);
-    //         passwordManager = new PasswordManager(password);
-    //     } catch (Exception e) {
-    //         System.out.println("Error: " + e.getMessage());
-    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-    //     }
-
-    //     // return passwordEncryption.getEncryptedPassword();
-    //     return passwordManager.getEncryptedPassword();
-    // }
-
-    // method to get secret key from passwordEncryption
-    // public String getSecretKey() throws IOException {
-    //     // SecretKey encodedKey = passwordEncryption.getSecretKey();
-    //     SecretKey encodedKey = passwordManager.getSecretKey();
-    //     String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
-    //     return secretKey;
-    // }
-
-    // method to create password
-    // public String createPassword() {
-    //     try {
-    //         // passwordEncryption = new PasswordEncryption(password);
-    //         passwordManager = new PasswordManager(password);
-    //     } catch (Exception e) {
-    //         System.out.println("Error: " + e.getMessage());
-    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-    //     }
-
-    //     // SecretKey encodedKey = passwordEncryption.getSecretKey();
-    //     SecretKey encodedKey = passwordManager.getSecretKey();
-    //     String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());
-    //     // return passwordEncryption.getEncryptedPassword() + ";" + secretKey;
-    //     return passwordManager.getEncryptedPassword() + ";" + secretKey;
-    // }
-
-    // method to create lecturer account
-    // public void createLecturerAcc(String name) throws IOException {
-    //     try {
-    //         PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
-    //         // pw.println(name + ";" + staffId + ";" + getEncryptedPassword() + ";" +
-    //         // getSecretKey());
-    //         pw.println(name + ";" + staffId + ";" + createPassword() + "\n");
-    //         pw.close();
-    //     } catch (Exception e) {
-    //         System.out.println("Error: " + e.getMessage());
-    //         System.out.println("Error at line: " + e.getStackTrace()[0].getLineNumber());
-    //     }
-    // }
-
     // polymorphism
     @Override
     public void createAccount(String name) throws IOException {
@@ -121,22 +45,42 @@ public class Lecturer extends User {
     }
 
     public double calcAverageMarks() {
-        double totalMarks = 0;
-        for (int i = 0; i < students.length; i++) {
-            // totalMarks += students[i].getSubMarks();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("database/student.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        return totalMarks / students.length;
+        String line = "";
+        double totalMarks = 0;
+        int studentCount = 0;
+        // double averageMarks = 0;
+
+        try {
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(";");
+                int marks = Integer.parseInt(data[4]);
+                totalMarks += marks;
+                studentCount++;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        double averageMarks = totalMarks / studentCount;
+
+        return averageMarks;
     }
 
-    public double calcTotalMarks() {
-        double totalMarks = 0;
-        for (int i = 0; i < students.length; i++) {
-            // totalMarks += students[i].getSubMarks();
-        }
-        return totalMarks;
-    }
+    // public double calcTotalMarks() {
+    // double totalMarks = 0;
+    // for (int i = 0; i < students.length; i++) {
+    // // totalMarks += students[i].getSubMarks();
+    // }
+    // return totalMarks;
+    // }
 
-    // dynamic polymorphism
+    // toString method
     @Override
     public String toString() {
         return "Staff " + super.toString();
