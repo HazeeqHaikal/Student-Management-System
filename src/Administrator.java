@@ -32,10 +32,10 @@ public class Administrator extends User {
 
     // polymorphism
     @Override
-    public void createAccount(String name) throws IOException {
+    public void createAccount(String name, String classTeach) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("database/administrator.txt", true));
         try {
-            pw.println(name + ";" + staffId + ";" + passwordManager.createPassword());
+            pw.println(name + ";" + super.getID() + ";" + passwordManager.createPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }

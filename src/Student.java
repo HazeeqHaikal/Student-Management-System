@@ -32,10 +32,10 @@ public class Student extends User {
 
     // polymorphism
     @Override
-    public void createAccount(String name) throws IOException {
+    public void createAccount(String name, String classIn) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt", true));
         try {
-            pw.println(name + ";" + getMatricNo() + ";" + passwordManager.createPassword() + ";CSC186;0");
+            pw.println(name + ";" + super.getID() + ";" + classIn + ";0;" + passwordManager.createPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -86,7 +86,7 @@ public class Main {
 
                 // if account is a lecturer
                 else if (typeAccount == 'L') {
-                    System.out.println("1. Check your password\n2. Check your students' grades\n\nEnter your choice: ");
+                    System.out.print("1. Check your password\n2. Check your students' grades\n\nEnter your choice: ");
                     int choice = intInput.nextInt();
 
                     System.out.flush();
@@ -94,9 +94,10 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        // Lecturer lecturer = new Lecturer(ID, password);
-                        // lecturer.calcTotalMarks();
-                        // System.out.println("\nYour students' grades are: " + data[5]);
+                        Lecturer lecturer = new Lecturer(ID, password);
+                        System.out.println("\nYour students' grades are: ");
+                        lecturer.getStudentsGrade();
+
                     } else {
                         System.out.println("\nInvalid choice!");
                     }
@@ -154,7 +155,7 @@ public class Main {
 
                         // create admin account
                         Administrator admin = new Administrator(adminID, adminPassword);
-                        admin.createAccount(adminName);
+                        admin.createAccount(adminName, "");
                         System.out.println("\nAccount created successfully!");
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
@@ -180,7 +181,15 @@ public class Main {
 
                 // exit program
                 if (exit == 'Y') {
-                    System.out.println("\nThank you for using the Student Management System!");
+                    String text = "\nThank you for using the Student Management System!";
+                    for (int i = 0; i < text.length(); i++) {
+                        System.out.print(text.charAt(i));
+                        try {
+                            Thread.sleep(20);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     intInput.close();
                     strInput.close();
                     loginOrRegister = 'E';
@@ -245,21 +254,56 @@ public class Main {
 
             // creating student or lecturer account
             if (userType == 'S') {
+                System.out
+                        .print("\n1. RCDCS1102A\n2. RCDCS1102B\n3. RCDCS1102C\n\nEnter the class that you are in (1-3): ");
+                int classChoiceInt = intInput.nextInt();
+                String classChoice = "";
+                if (classChoiceInt == 1) {
+                    classChoice = "RCDCS1102A";
+                } else if (classChoiceInt == 2) {
+                    classChoice = "RCDCS1102B";
+                } else if (classChoiceInt == 3) {
+                    classChoice = "RCDCS1102C";
+                } else {
+                    System.out.println("\nInvalid choice!");
+                    intInput.close();
+                    strInput.close();
+                    return;
+                }
                 Student student = new Student(ID, password);
-                student.createAccount(name);
+                student.createAccount(name, classChoice);
             } else if (userType == 'L') {
+                System.out
+                        .print("\n1. RCDCS1102A\n2. RCDCS1102B\n3. RCDCS1102C\n\nEnter the class that you teach (1-3): ");
+                int classChoiceInt = intInput.nextInt();
+                String classChoice = "";
+                if (classChoiceInt == 1) {
+                    classChoice = "RCDCS1102A";
+                } else if (classChoiceInt == 2) {
+                    classChoice = "RCDCS1102B";
+                } else if (classChoiceInt == 3) {
+                    classChoice = "RCDCS1102C";
+                } else {
+                    System.out.println("\nInvalid choice!");
+                    intInput.close();
+                    strInput.close();
+                    return;
+                }
+
                 Lecturer lecturer = new Lecturer(ID, password);
-                lecturer.createAccount(name);
+                lecturer.createAccount(name, classChoice);
             }
 
-            System.out.println("\nAccount created successfully!");
-            System.out.println();
-            System.out.println("ID: " + ID + "\nPassword: " + password);
+            String successfullPrompt = "\nAccount created successfully!\n\nID: " + ID + "\nPassword: " + password
+                    + "\n\nPress enter to continue...";
+            String[] successfullPromptArray = successfullPrompt.split("");
+            for (int i = 0; i < successfullPromptArray.length; i++) {
+                System.out.print(successfullPromptArray[i] + "");
+                Thread.sleep(30);
+            }
+            System.in.read();
 
         }
-
-        System.out.print("Press enter to continue...");
-        System.in.read();
 
         // close the input
         intInput.close();

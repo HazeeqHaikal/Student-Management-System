@@ -176,9 +176,9 @@ public class PasswordManager {
             String studentLine = student.readLine();
             while (studentLine != null) {
                 String[] studentDetails = studentLine.split(";");
-                byte[] decodedKey = Base64.getDecoder().decode(studentDetails[3]);
+                byte[] decodedKey = Base64.getDecoder().decode(studentDetails[5]);
                 SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-                String decryptedPassword = decryptPassword(studentDetails[2], originalKey);
+                String decryptedPassword = decryptPassword(studentDetails[4], originalKey);
                 password += studentDetails[0] + " - " + decryptedPassword + "\n";
                 studentLine = student.readLine();
             }
@@ -197,9 +197,9 @@ public class PasswordManager {
             String adminLine = admin.readLine();
             while (adminLine != null) {
                 String[] adminDetails = adminLine.split(";");
-                byte[] decodedKey = Base64.getDecoder().decode(adminDetails[3]);
+                byte[] decodedKey = Base64.getDecoder().decode(adminDetails[4]);
                 SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-                String decryptedPassword = decryptPassword(adminDetails[2], originalKey);
+                String decryptedPassword = decryptPassword(adminDetails[3], originalKey);
                 password += adminDetails[0] + " - " + decryptedPassword + "\n";
                 adminLine = admin.readLine();
             }
@@ -220,7 +220,7 @@ public class PasswordManager {
             String studentLine = student.readLine();
             while (studentLine != null) {
                 String[] studentDetails = studentLine.split(";");
-                if (studentDetails[1].equals(matricNo) && studentDetails[2].equals(getEncryptedPassword())) {
+                if (studentDetails[1].equals(matricNo) && studentDetails[4].equals(getEncryptedPassword())) {
                     data = studentDetails;
                     student.close();
                     return data;
@@ -233,7 +233,7 @@ public class PasswordManager {
             String lecturerLine = lecturer.readLine();
             while (lecturerLine != null) {
                 String[] lecturerDetails = lecturerLine.split(";");
-                if (lecturerDetails[1].equals(matricNo) && lecturerDetails[2].equals(getEncryptedPassword())) {
+                if (lecturerDetails[1].equals(matricNo) && lecturerDetails[3].equals(getEncryptedPassword())) {
                     data = lecturerDetails;
                     lecturer.close();
                     return data;
@@ -272,7 +272,7 @@ public class PasswordManager {
             String studentLine = student.readLine();
             while (studentLine != null) {
                 String[] studentDetails = studentLine.split(";");
-                if (studentDetails[1].equals(ID) && studentDetails[2].equals(getEncryptedPassword())) {
+                if (studentDetails[1].equals(ID) && studentDetails[4].equals(getEncryptedPassword())) {
                     student.close();
                     return true;
                 }
@@ -284,7 +284,7 @@ public class PasswordManager {
             String lecturerLine = lecturer.readLine();
             while (lecturerLine != null) {
                 String[] lecturerDetails = lecturerLine.split(";");
-                if (lecturerDetails[1].equals(ID) && lecturerDetails[2].equals(getEncryptedPassword())) {
+                if (lecturerDetails[1].equals(ID) && lecturerDetails[3].equals(getEncryptedPassword())) {
                     lecturer.close();
                     return true;
                 }

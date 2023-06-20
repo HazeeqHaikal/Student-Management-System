@@ -28,7 +28,7 @@ public abstract class User {
         this.password = password;
     }
 
-    public abstract void createAccount(String name) throws IOException;
+    public abstract void createAccount(String name, String classTeach) throws IOException;
 
     // tostring
     public String toString() {

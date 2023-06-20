@@ -32,36 +32,64 @@ public class Lecturer extends User {
         this.staffId = staffId;
     }
 
-    public String[] findStudentsGrade() {
+    // public String[] getStudentsGrade() {
+    public void getStudentsGrade() {
         BufferedReader br = null;
+        BufferedReader lecturer = null;
+
         try {
             br = new BufferedReader(new FileReader("database/student.txt"));
+            lecturer = new BufferedReader(new FileReader("database/lecturer.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         String line = "";
+        String classTeach = "";
         String[] data = null;
-        String[] studentGrade = null;
+        // String[] studentGrade = null;
+        // int count = 0;
         try {
-            while ((line = br.readLine()) != null) {
+            while ((line = lecturer.readLine()) != null) {
                 data = line.split(";");
-                studentGrade = new String[data.length];
-                for (int i = 0; i < data.length; i++) {
-                    studentGrade[i] = data[0] + ";" + data[5];
+                if (super.getID().equals(data[1])) {
+                    classTeach = data[2];
+                    break;
                 }
             }
+
+            while ((line = br.readLine()) != null) {
+                data = line.split(";");
+                if (classTeach.equals(data[2])) {
+                    System.out.println("Student: " + data[0] + " Grade: " + data[3]);
+                    // count++;
+                }
+
+            }
+
+            // studentGrade = new String[count];
+            // count = 0;
+            // while ((line = br.readLine()) != null) {
+            //     data = line.split(";");
+            //     if (classTeach.equals(data[2])) {
+            //         studentGrade[count] = data[0] + ";" + data[3];
+            //         System.out.println("Student: " + data[0] + " Grade: " + data[3]);
+            //         count++;
+            //     }
+            // }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return studentGrade;
+
+        // return studentGrade;
     }
 
     // polymorphism
     @Override
-    public void createAccount(String name) throws IOException {
+    public void createAccount(String name, String classTeach) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
         try {
-            pw.println(name + ";" + staffId + ";" + passwordManager.createPassword());
+            pw.println(name + ";" + super.getID() + ";" + classTeach + ";" + passwordManager.createPassword());
         } catch (Exception e) {
             e.printStackTrace();
         }
