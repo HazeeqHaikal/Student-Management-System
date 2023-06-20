@@ -32,6 +32,30 @@ public class Lecturer extends User {
         this.staffId = staffId;
     }
 
+    public String[] findStudentsGrade() {
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("database/student.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line = "";
+        String[] data = null;
+        String[] studentGrade = null;
+        try {
+            while ((line = br.readLine()) != null) {
+                data = line.split(";");
+                studentGrade = new String[data.length];
+                for (int i = 0; i < data.length; i++) {
+                    studentGrade[i] = data[0] + ";" + data[5];
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return studentGrade;
+    }
+
     // polymorphism
     @Override
     public void createAccount(String name) throws IOException {

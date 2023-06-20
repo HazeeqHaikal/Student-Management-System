@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.*;
 
 public class PasswordManager {
-    
+
     // salt for key derivation
     private static final byte[] SALT = "12345678".getBytes();
     // iteration count for key derivation
@@ -31,8 +31,9 @@ public class PasswordManager {
     private String encryptedPassword;
     // decrypted password
     private String decryptedPassword;
-    private Student student;
+    // private Student student;
 
+    // normal constructor
     public PasswordManager(String password) throws Exception {
         this.password = password;
         this.secretKey = generateSecretKey(password);
@@ -40,20 +41,9 @@ public class PasswordManager {
         this.decryptedPassword = decryptPassword(encryptedPassword, secretKey);
     }
 
+    // getter and setter methods
     public String getPassword() {
         return password;
-    }
-
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) throws Exception {
-        this.student = student;
-        this.password = student.getPassword();
-        this.secretKey = generateSecretKey(password);
-        this.encryptedPassword = encryptPassword(password, secretKey);
-        this.decryptedPassword = decryptPassword(encryptedPassword, secretKey);
     }
 
     public void setPassword(String password) throws Exception {
@@ -71,7 +61,9 @@ public class PasswordManager {
         return decryptedPassword;
     }
 
-    private static SecretKey generateSecretKey(String password) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    // method to generate secret key that will be used to encrypt password
+    private static SecretKey generateSecretKey(String password)
+            throws NoSuchAlgorithmException, InvalidKeySpecException {
         PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray(), SALT, ITERATION_COUNT, KEY_LENGTH);
         SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM);
         SecretKey secretKey = keyFactory.generateSecret(keySpec);
@@ -83,6 +75,7 @@ public class PasswordManager {
         return (SecretKeySpec) secretKey;
     }
 
+    // method to verify the existence of the account
     public boolean findAccount(String matricNo) throws Exception {
         BufferedReader lecturer = new BufferedReader(new FileReader("database/lecturer.txt"));
         BufferedReader student = new BufferedReader(new FileReader("database/student.txt"));
@@ -126,6 +119,7 @@ public class PasswordManager {
         return false;
     }
 
+    // method to get the password of the student
     public char getTypeAccount(String matricNo) throws Exception {
         BufferedReader lecturer = new BufferedReader(new FileReader("database/lecturer.txt"));
         BufferedReader student = new BufferedReader(new FileReader("database/student.txt"));
@@ -174,6 +168,7 @@ public class PasswordManager {
         return type;
     }
 
+    // method to get all the password of the student
     public String getAllStudentsPassword() {
         String password = "";
         try {
@@ -194,6 +189,7 @@ public class PasswordManager {
         return password;
     }
 
+    // method to get all the password of the lecturer
     public String getAllLecturersPassword() {
         String password = "";
         try {
@@ -214,6 +210,8 @@ public class PasswordManager {
         return password;
     }
 
+    // method to access the file and return the data of the user based on the matric
+    // number
     public String[] accessFile(String matricNo) throws Exception {
         char type = getTypeAccount(matricNo);
         String[] data = null;
@@ -260,7 +258,7 @@ public class PasswordManager {
         return data;
     }
 
-
+    // method to create password
     public String createPassword() throws Exception {
         SecretKey encodedKey = getSecretKey();
         String secretKey = Base64.getEncoder().encodeToString(encodedKey.getEncoded());

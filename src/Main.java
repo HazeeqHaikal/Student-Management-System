@@ -8,14 +8,14 @@ public class Main {
 
         System.out.println("Welcome to the Student Management System!");
 
-        System.out.print("\nDo you want to login (L) or register (R)?: ");
+        System.out.print("\nDo you want to login (L), register (R) or exit (E)?: ");
         char loginOrRegister = strInput.nextLine().charAt(0);
         loginOrRegister = Character.toUpperCase(loginOrRegister);
 
         // loop until user enters a valid choice
-        while (loginOrRegister != 'L' && loginOrRegister != 'R') {
+        while (loginOrRegister != 'L' && loginOrRegister != 'R' && loginOrRegister != 'E') {
             System.out.println("\nInvalid choice!");
-            System.out.print("Do you want to login (L) or register (R)?: ");
+            System.out.print("\nDo you want to login (L), register (R) or exit (E)?: ");
             loginOrRegister = strInput.nextLine().charAt(0);
             loginOrRegister = Character.toUpperCase(loginOrRegister);
         }
@@ -23,6 +23,13 @@ public class Main {
         // clearing terminal
         System.out.flush();
 
+        // exit program
+        if (loginOrRegister == 'E') {
+            System.out.println("\nThank you for using the Student Management System!");
+            intInput.close();
+            strInput.close();
+            return;
+        }
         // login page
         if (loginOrRegister == 'L') {
             System.out.println("\nLogin Page");
@@ -55,104 +62,129 @@ public class Main {
                 return;
             }
 
-            // welcome message with their name from the txt filpe
+            // welcome message with their name from the txt file
             System.out.println("\nWelcome " + data[0] + "!");
 
-            // if account is a student
-            if (typeAccount == 'S') {
-                System.out.print("1. Check your password\n2. Check your grades\n\nEnter your choice: ");
-                int choice = intInput.nextInt();
-
-                System.out.flush();
-
-                if (choice == 1) {
-                    System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
-                } else if (choice == 2) {
-                    // Student student = new Student(ID, password);
-                    // student.calcTotalMarks();
-                    // System.out.println("\nYour grades are: " + data[5]);
-                } else {
-                    System.out.println("\nInvalid choice!");
-                }
-            }
-
-            // if account is a lecturer
-            else if (typeAccount == 'L') {
-                System.out.println("1. Check your password\n2. Check your students' grades\n\nEnter your choice: ");
-                int choice = intInput.nextInt();
-
-                System.out.flush();
-
-                if (choice == 1) {
-                    System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
-                } else if (choice == 2) {
-                    // Lecturer lecturer = new Lecturer(ID, password);
-                    // lecturer.calcTotalMarks();
-                    // System.out.println("\nYour students' grades are: " + data[5]);
-                } else {
-                    System.out.println("\nInvalid choice!");
-                }
-            }
-
-            // if account is an admin
-            else if (typeAccount == 'A') {
-                System.out.print(
-                        "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n\nEnter your choice: ");
-
-                int choice = intInput.nextInt();
-
-                System.out.flush();
-
-                if (choice == 1) {
-                    System.out.println("\nAll student's password\n");
-                    System.out.println(passwordManager.getAllStudentsPassword());
-                } else if (choice == 2) {
-                    System.out.println("\nAll lecturer's password\n");
-                    System.out.println(passwordManager.getAllLecturersPassword());
-                } else if (choice == 3) {
-                    System.out.println("Enter the admin's name: ");
-                    String adminName = strInput.nextLine();
-
-                    System.out.print("\nEnter the admin's ID: ");
-                    String adminID = strInput.nextLine();
-
-                    System.out.print("Enter the admin's password: ");
-                    String adminPassword = strInput.nextLine();
-
-                    System.out.print("Confirm the admin's password: ");
-                    String adminConfirmPassword = strInput.nextLine();
-
-                    // loop until password and confirm password variable value is the same
-                    while (!adminPassword.equals(adminConfirmPassword)) {
-                        System.out.println("\nPasswords do not match!");
-                        System.out.print("Enter the admin's password: ");
-                        adminPassword = strInput.nextLine();
-
-                        System.out.print("Confirm the admin's password: ");
-                        adminConfirmPassword = strInput.nextLine();
-                    }
-
-                    passwordManager = new PasswordManager(adminPassword);
-                    boolean isFoundAdmin = passwordManager.findAccount(adminID);
+            while (loginOrRegister != 'E') {
+                // if account is a student
+                if (typeAccount == 'S') {
+                    System.out.print("1. Check your password\n2. Check your grades\n\nEnter your choice: ");
+                    int choice = intInput.nextInt();
 
                     System.out.flush();
 
-                    // if account already exists print out error message
-                    if (isFoundAdmin) {
-                        System.out.println("\nAccount already exists!");
-                        intInput.close();
-                        strInput.close();
-                        return;
+                    if (choice == 1) {
+                        System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
+                    } else if (choice == 2) {
+                        // Student student = new Student(ID, password);
+                        // student.calcTotalMarks();
+                        // System.out.println("\nYour grades are: " + data[5]);
+                    } else {
+                        System.out.println("\nInvalid choice!");
+                    }
+                }
+
+                // if account is a lecturer
+                else if (typeAccount == 'L') {
+                    System.out.println("1. Check your password\n2. Check your students' grades\n\nEnter your choice: ");
+                    int choice = intInput.nextInt();
+
+                    System.out.flush();
+
+                    if (choice == 1) {
+                        System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
+                    } else if (choice == 2) {
+                        // Lecturer lecturer = new Lecturer(ID, password);
+                        // lecturer.calcTotalMarks();
+                        // System.out.println("\nYour students' grades are: " + data[5]);
+                    } else {
+                        System.out.println("\nInvalid choice!");
                     }
 
-                    // create admin account
-                    Administrator admin = new Administrator(adminID, adminPassword);
-                    admin.createAccount(adminName);
-                    System.out.println("\nAccount created successfully!");
-                    System.out.println();
-                    System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
-                } else {
+                }
+
+                // if account is an admin
+                else if (typeAccount == 'A') {
+                    System.out.print(
+                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n\nEnter your choice: ");
+
+                    int choice = intInput.nextInt();
+
+                    System.out.flush();
+
+                    if (choice == 1) {
+                        System.out.println("\nAll student's password\n");
+                        System.out.println(passwordManager.getAllStudentsPassword());
+                    } else if (choice == 2) {
+                        System.out.println("\nAll lecturer's password\n");
+                        System.out.println(passwordManager.getAllLecturersPassword());
+                    } else if (choice == 3) {
+                        System.out.print("Enter the admin's name: ");
+                        String adminName = strInput.nextLine();
+
+                        System.out.print("\nEnter the admin's ID: ");
+                        String adminID = strInput.nextLine();
+
+                        System.out.print("Enter the admin's password: ");
+                        String adminPassword = strInput.nextLine();
+
+                        System.out.print("Confirm the admin's password: ");
+                        String adminConfirmPassword = strInput.nextLine();
+
+                        // loop until password and confirm password variable value is the same
+                        while (!adminPassword.equals(adminConfirmPassword)) {
+                            System.out.println("\nPasswords do not match!");
+                            System.out.print("Enter the admin's password: ");
+                            adminPassword = strInput.nextLine();
+
+                            System.out.print("Confirm the admin's password: ");
+                            adminConfirmPassword = strInput.nextLine();
+                        }
+
+                        passwordManager = new PasswordManager(adminPassword);
+                        boolean isFoundAdmin = passwordManager.findAccount(adminID);
+
+                        System.out.flush();
+
+                        // if account already exists print out error message
+                        if (isFoundAdmin) {
+                            System.out.println("\nAccount already exists!");
+                            continue;
+                        }
+
+                        // create admin account
+                        Administrator admin = new Administrator(adminID, adminPassword);
+                        admin.createAccount(adminName);
+                        System.out.println("\nAccount created successfully!");
+                        System.out.println();
+                        System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
+                    } else {
+                        System.out.println("\nInvalid choice!");
+                    }
+                }
+
+                System.out.print("\nDo you want to exit? (Y/N): ");
+                char exit = strInput.nextLine().charAt(0);
+                exit = Character.toUpperCase(exit);
+
+                // loop until user enters a valid choice
+                while (exit != 'Y' && exit != 'N') {
                     System.out.println("\nInvalid choice!");
+                    System.out.print("\nDo you want to exit? (Y/N): ");
+                    exit = strInput.nextLine().charAt(0);
+                    exit = Character.toUpperCase(exit);
+                }
+
+                // clearing terminal
+                System.out.flush();
+
+                // exit program
+                if (exit == 'Y') {
+                    System.out.println("\nThank you for using the Student Management System!");
+                    intInput.close();
+                    strInput.close();
+                    loginOrRegister = 'E';
+                    break;
                 }
             }
         }
