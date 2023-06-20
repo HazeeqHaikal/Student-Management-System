@@ -76,7 +76,7 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        Student student = new Student(ID, password);
+                        Student student = new Student(ID, password, data[2]);
                         System.out.println("\nYour marks are: " + data[3]);
                         System.out.println("Your grade is: " + student.calcGrade(Integer.parseInt(data[3])));
                     } else {
@@ -95,7 +95,7 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        Lecturer lecturer = new Lecturer(ID, password);
+                        Lecturer lecturer = new Lecturer(ID, password, data[2]);
                         String studentInfo = lecturer.getStudentsGrade(data);
                         if (studentInfo == null) {
                             System.out.println("\nNo students in your class!");
@@ -183,7 +183,7 @@ public class Main {
 
                         // create admin account
                         Administrator admin = new Administrator(adminID, adminPassword);
-                        admin.createAccount(adminName, "");
+                        admin.createAccount(adminName);
                         System.out.println("\nAccount created successfully!");
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
@@ -298,8 +298,8 @@ public class Main {
                     strInput.close();
                     return;
                 }
-                Student student = new Student(ID, password);
-                student.createAccount(name, classChoice);
+                Student student = new Student(ID, password, classChoice);
+                student.createAccount(name);
             } else if (userType == 'L') {
                 System.out
                         .print("\n1. RCDCS1102A\n2. RCDCS1102B\n3. RCDCS1102C\n\nEnter the class that you teach (1-3): ");
@@ -318,8 +318,8 @@ public class Main {
                     return;
                 }
 
-                Lecturer lecturer = new Lecturer(ID, password);
-                lecturer.createAccount(name, classChoice);
+                Lecturer lecturer = new Lecturer(ID, password, classChoice);
+                lecturer.createAccount(name);
             }
 
             String successfullPrompt = "\nAccount created successfully!\n\nID: " + ID + "\nPassword: " + password

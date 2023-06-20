@@ -8,10 +8,12 @@ public class Lecturer extends User {
     private PasswordManager passwordManager = null;
     private String staffId;
     private String password;
+    private String classTeach;
 
     // normal constructor
-    public Lecturer(String staffId, String password) throws Exception {
+    public Lecturer(String staffId, String password, String classTeach) throws Exception {
         super(staffId, password);
+        this.classTeach = classTeach;
         this.passwordManager = new PasswordManager(password);
     }
 
@@ -30,6 +32,14 @@ public class Lecturer extends User {
 
     public void setStaffID(String staffId) {
         this.staffId = staffId;
+    }
+
+    public String getClassTeach() {
+        return classTeach;
+    }
+
+    public void setClassTeach(String classTeach) {
+        this.classTeach = classTeach;
     }
 
     public String getStudentsGrade(String[] lecturerFile) {
@@ -53,7 +63,7 @@ public class Lecturer extends User {
                     if (classTeach.equals(data[2])) {
                         int marks = Integer.parseInt(data[3]);
                         char grade = calcGrade(marks);
-                        studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade);
+                        studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade) + "\n";
                     }
 
                 }
@@ -93,7 +103,7 @@ public class Lecturer extends User {
                 data = line.split(";");
                 if (classTeach.equals(data[2]) && studentName.equals(data[0])) {
                     count++;
-                    studentGrade += String.format("%-4s %-40s %-10s", count, data[0], data[3]);
+                    studentGrade += String.format("%-4s %-40s %-10s", count, data[0], data[3]) + "\n";
                 }
 
             }
@@ -107,7 +117,7 @@ public class Lecturer extends User {
 
     // polymorphism
     @Override
-    public void createAccount(String name, String classTeach) throws IOException {
+    public void createAccount(String name) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("database/lecturer.txt", true));
         try {
             pw.println(name + ";" + super.getID() + ";" + classTeach + ";" + passwordManager.createPassword());

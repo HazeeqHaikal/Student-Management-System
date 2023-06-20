@@ -5,11 +5,13 @@ public class Student extends User {
     // attributes
     private String matricNo;
     private String password;
+    private String classIn;
     private PasswordManager passwordManager = null;
 
     // normal constructor
-    public Student(String matricNo, String password) throws Exception {
+    public Student(String matricNo, String password, String classIn) throws Exception {
         super(matricNo, password);
+        this.classIn = classIn;
         this.passwordManager = new PasswordManager(password);
     }
 
@@ -28,6 +30,14 @@ public class Student extends User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getClassIn() {
+        return classIn;
+    }
+
+    public void setClassIn(String classIn) {
+        this.classIn = classIn;
     }
 
     public char calcGrade(int marks) {
@@ -50,7 +60,7 @@ public class Student extends User {
 
     // polymorphism
     @Override
-    public void createAccount(String name, String classIn) throws IOException {
+    public void createAccount(String name) throws IOException {
         PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt", true));
         try {
             pw.println(name + ";" + super.getID() + ";" + classIn + ";0;" + passwordManager.createPassword());
