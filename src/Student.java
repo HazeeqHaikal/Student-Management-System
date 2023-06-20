@@ -30,6 +30,24 @@ public class Student extends User {
         this.password = password;
     }
 
+    public char calcGrade(int marks) {
+        char grade = ' ';
+        if (marks >= 80) {
+            grade = 'A';
+        } else if (marks >= 70) {
+            grade = 'B';
+        } else if (marks >= 60) {
+            grade = 'C';
+        } else if (marks >= 50) {
+            grade = 'D';
+        } else if (marks >= 40) {
+            grade = 'E';
+        } else {
+            grade = 'F';
+        }
+        return grade;
+    }
+
     // polymorphism
     @Override
     public void createAccount(String name, String classIn) throws IOException {

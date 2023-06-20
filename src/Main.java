@@ -63,7 +63,7 @@ public class Main {
             }
 
             // welcome message with their name from the txt file
-            System.out.println("\nWelcome " + data[0] + "!");
+            System.out.println("\nWelcome " + data[0] + "!\n");
 
             while (loginOrRegister != 'E') {
                 // if account is a student
@@ -76,9 +76,9 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        // Student student = new Student(ID, password);
-                        // student.calcTotalMarks();
-                        // System.out.println("\nYour grades are: " + data[5]);
+                        Student student = new Student(ID, password);
+                        System.out.println("\nYour marks are: " + data[3]);
+                        System.out.println("Your grade is: " + student.calcGrade(Integer.parseInt(data[3])));
                     } else {
                         System.out.println("\nInvalid choice!");
                     }
@@ -86,7 +86,8 @@ public class Main {
 
                 // if account is a lecturer
                 else if (typeAccount == 'L') {
-                    System.out.print("1. Check your password\n2. Check your students' grades\n\nEnter your choice: ");
+                    System.out.print(
+                            "1. Check your password\n2. Check your students' grades\n3. Add student's grades\n\nEnter your choice: ");
                     int choice = intInput.nextInt();
 
                     System.out.flush();
@@ -95,9 +96,36 @@ public class Main {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
                         Lecturer lecturer = new Lecturer(ID, password);
-                        System.out.println("\nYour students' grades are: ");
-                        lecturer.getStudentsGrade();
+                        String studentInfo = lecturer.getStudentsGrade(data);
+                        if (studentInfo == null) {
+                            System.out.println("\nNo students in your class!");
+                            continue;
+                        }
+                        System.out.println("\nClass you are teaching: " + data[2] + "\n");
+                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
+                        System.out.println("\n");
+                        System.out.println(studentInfo);
+                    } else if (choice == 3) {
+                        // System.out.print("\nEnter the student's ID: ");
+                        // String studentID = strInput.nextLine();
 
+                        // System.out.print("\nEnter the student's grade: ");
+                        // String studentGrade = strInput.nextLine();
+
+                        // System.out.flush();
+
+                        // Lecturer lecturer = new Lecturer(ID, password);
+                        // boolean isFoundStudent = lecturer.findStudent(studentID);
+
+                        // // if student doesn't exist print out error message
+                        // if (!isFoundStudent) {
+                        // System.out.println("\nStudent not found!");
+                        // continue;
+                        // }
+
+                        // // add student's grade
+                        // lecturer.addGrade(studentID, studentGrade);
+                        // System.out.println("\nGrade added successfully!");
                     } else {
                         System.out.println("\nInvalid choice!");
                     }

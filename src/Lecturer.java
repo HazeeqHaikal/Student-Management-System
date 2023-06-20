@@ -32,8 +32,40 @@ public class Lecturer extends User {
         this.staffId = staffId;
     }
 
-    // public String[] getStudentsGrade() {
-    public void getStudentsGrade() {
+    public String getStudentsGrade(String[] lecturerFile) {
+        BufferedReader br = null;
+
+        try {
+            br = new BufferedReader(new FileReader("database/student.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line = "";
+        String classTeach = "";
+        String[] data = null;
+        String studentGrade = "";
+        try {
+            if (super.getID().equals(lecturerFile[1])) {
+                classTeach = lecturerFile[2];
+
+                while ((line = br.readLine()) != null) {
+                    data = line.split(";");
+                    if (classTeach.equals(data[2])) {
+                        int marks = Integer.parseInt(data[3]);
+                        char grade = calcGrade(marks);
+                        studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade);
+                    }
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return studentGrade;
+    }
+
+    public String findStudent(String studentName) {
         BufferedReader br = null;
         BufferedReader lecturer = null;
 
@@ -46,8 +78,7 @@ public class Lecturer extends User {
         String line = "";
         String classTeach = "";
         String[] data = null;
-        // String[] studentGrade = null;
-        // int count = 0;
+        String studentGrade = "";
         try {
             while ((line = lecturer.readLine()) != null) {
                 data = line.split(";");
@@ -57,31 +88,21 @@ public class Lecturer extends User {
                 }
             }
 
+            int count = 0;
             while ((line = br.readLine()) != null) {
                 data = line.split(";");
-                if (classTeach.equals(data[2])) {
-                    System.out.println("Student: " + data[0] + " Grade: " + data[3]);
-                    // count++;
+                if (classTeach.equals(data[2]) && studentName.equals(data[0])) {
+                    count++;
+                    studentGrade += String.format("%-4s %-40s %-10s", count, data[0], data[3]);
                 }
 
             }
-
-            // studentGrade = new String[count];
-            // count = 0;
-            // while ((line = br.readLine()) != null) {
-            //     data = line.split(";");
-            //     if (classTeach.equals(data[2])) {
-            //         studentGrade[count] = data[0] + ";" + data[3];
-            //         System.out.println("Student: " + data[0] + " Grade: " + data[3]);
-            //         count++;
-            //     }
-            // }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // return studentGrade;
+        return studentGrade;
     }
 
     // polymorphism
@@ -94,6 +115,24 @@ public class Lecturer extends User {
             e.printStackTrace();
         }
         pw.close();
+    }
+
+    public char calcGrade(int marks) {
+        char grade = ' ';
+        if (marks >= 80) {
+            grade = 'A';
+        } else if (marks >= 70) {
+            grade = 'B';
+        } else if (marks >= 60) {
+            grade = 'C';
+        } else if (marks >= 50) {
+            grade = 'D';
+        } else if (marks >= 40) {
+            grade = 'E';
+        } else {
+            grade = 'F';
+        }
+        return grade;
     }
 
     public double calcAverageMarks() {
