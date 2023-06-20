@@ -86,6 +86,9 @@ public class Main {
 
                 // if account is a lecturer
                 else if (typeAccount == 'L') {
+                    Lecturer lecturer = new Lecturer(ID, password, data[2]);
+                    String studentInfo = lecturer.getStudentsGrade(data);
+
                     System.out.print(
                             "1. Check your password\n2. Check your students' grades\n3. Add student's grades\n\nEnter your choice: ");
                     int choice = intInput.nextInt();
@@ -95,8 +98,6 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        Lecturer lecturer = new Lecturer(ID, password, data[2]);
-                        String studentInfo = lecturer.getStudentsGrade(data);
                         if (studentInfo == null) {
                             System.out.println("\nNo students in your class!");
                             continue;
@@ -106,26 +107,28 @@ public class Main {
                         System.out.println("\n");
                         System.out.println(studentInfo);
                     } else if (choice == 3) {
-                        // System.out.print("\nEnter the student's ID: ");
-                        // String studentID = strInput.nextLine();
+                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
+                        System.out.println("\n");
+                        System.out.println(studentInfo);
 
-                        // System.out.print("\nEnter the student's grade: ");
-                        // String studentGrade = strInput.nextLine();
+                        System.out.print("\nEnter the student's ID: ");
+                        String studentID = strInput.nextLine();
 
-                        // System.out.flush();
+                        System.out.print("Enter the student's marks: ");
+                        int studentMarks = intInput.nextInt();
 
-                        // Lecturer lecturer = new Lecturer(ID, password);
-                        // boolean isFoundStudent = lecturer.findStudent(studentID);
+                        boolean isFoundStudent = lecturer.findStudent(studentID);
 
-                        // // if student doesn't exist print out error message
-                        // if (!isFoundStudent) {
-                        // System.out.println("\nStudent not found!");
-                        // continue;
-                        // }
+                        // if student doesn't exist print out error message
+                        if (!isFoundStudent) {
+                            System.out.println("\nStudent not found!");
+                            continue;
+                        }
 
-                        // // add student's grade
-                        // lecturer.addGrade(studentID, studentGrade);
-                        // System.out.println("\nGrade added successfully!");
+                        // add student's grade
+                        lecturer.addGrade(studentID, studentMarks);
+                        System.out.println("\nGrade added successfully!");
+
                     } else {
                         System.out.println("\nInvalid choice!");
                     }

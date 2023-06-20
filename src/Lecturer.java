@@ -72,44 +72,60 @@ public class Lecturer extends User {
         return studentGrade;
     }
 
-    public String findStudent(String studentName) {
+    public boolean findStudent(String studentID) {
         BufferedReader br = null;
-        BufferedReader lecturer = null;
-
+        boolean found = false;
         try {
             br = new BufferedReader(new FileReader("database/student.txt"));
-            lecturer = new BufferedReader(new FileReader("database/lecturer.txt"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         String line = "";
-        String classTeach = "";
         String[] data = null;
-        String studentGrade = "";
         try {
-            while ((line = lecturer.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 data = line.split(";");
-                if (super.getID().equals(data[1])) {
-                    classTeach = data[2];
+                if (studentID.equals(data[1])) {
+                    found = true;
                     break;
                 }
             }
-
-            int count = 0;
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (classTeach.equals(data[2]) && studentName.equals(data[0])) {
-                    count++;
-                    studentGrade += String.format("%-4s %-40s %-10s", count, data[0], data[3]) + "\n";
-                }
-
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return found;
+    }
 
-        return studentGrade;
+    public void addGrade(String studentID, int marks) {
+        BufferedReader br = null;
+        String line = "";
+        String[] data = null;
+        String[] newData = null;
+        String newLine = "";
+        try {
+            br = new BufferedReader(new FileReader("database/student.txt"));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            while ((line = br.readLine()) != null) {
+                data = line.split(";");
+                if (studentID.equals(data[1]))
+                    data[3] = Integer.toString(marks);
+
+                newLine += data[0] + ";" + data[1] + ";" + data[2] + ";" + data[3] + ";" + data[4] + ";" + data[5]
+                        + "\n";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt"));
+            pw.print(newLine);
+            pw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // polymorphism
