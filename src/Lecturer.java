@@ -51,23 +51,20 @@ public class Lecturer extends User {
             e.printStackTrace();
         }
         String line = "";
-        String classTeach = "";
         String[] data = null;
         String studentGrade = "";
         try {
-            if (super.getID().equals(lecturerFile[1])) {
-                classTeach = lecturerFile[2];
 
-                while ((line = br.readLine()) != null) {
-                    data = line.split(";");
-                    if (classTeach.equals(data[2])) {
-                        int marks = Integer.parseInt(data[3]);
-                        char grade = calcGrade(marks);
-                        studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade) + "\n";
-                    }
-
+            while ((line = br.readLine()) != null) {
+                data = line.split(";");
+                if (classTeach.equals(data[2])) {
+                    int marks = Integer.parseInt(data[3]);
+                    char grade = calcGrade(marks);
+                    studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade) + "\n";
                 }
+
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
