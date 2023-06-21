@@ -5,6 +5,8 @@ public class Main {
         Scanner intInput = new Scanner(System.in);
         Scanner strInput = new Scanner(System.in);
         PasswordManager passwordManager = null;
+        String successfulPrompt = "";
+        String failedPrompt = "";
 
         System.out.println("Welcome to the Student Management System!");
 
@@ -25,7 +27,15 @@ public class Main {
 
         // exit program
         if (loginOrRegister == 'E') {
-            System.out.println("\nThank you for using the Student Management System!");
+            successfulPrompt = "\nThank you for using the Student Management System!";
+            for (int i = 0; i < successfulPrompt.length(); i++) {
+                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             intInput.close();
             strInput.close();
             return;
@@ -48,7 +58,15 @@ public class Main {
             System.out.flush();
             // if account doesn't exist in any of the files print out error message
             if (!isFound) {
-                System.out.println("\nAccount not found!");
+                failedPrompt = "\n\nAccount not found!";
+                for (int i = 0; i < failedPrompt.length(); i++) {
+                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 intInput.close();
                 strInput.close();
                 return;
@@ -56,7 +74,15 @@ public class Main {
 
             // if password is wrong print out error message
             if (!passwordManager.verifyPassword(ID)) {
-                System.out.println("\nWrong password!");
+                failedPrompt = "\n\nWrong password!";
+                for (int i = 0; i < failedPrompt.length(); i++) {
+                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 intInput.close();
                 strInput.close();
                 return;
@@ -121,13 +147,29 @@ public class Main {
 
                         // if student doesn't exist print out error message
                         if (!isFoundStudent) {
-                            System.out.println("\nStudent not found!");
+                            failedPrompt = "\n\nStudent not found!";
+                            for (int i = 0; i < failedPrompt.length(); i++) {
+                                System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                                try {
+                                    Thread.sleep(30);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             continue;
                         }
 
                         // add student's grade
                         lecturer.addGrade(studentID, studentMarks);
-                        System.out.println("\nGrade added successfully!");
+                        successfulPrompt = "\n\nGrade added successfully!";
+                        for (int i = 0; i < successfulPrompt.length(); i++) {
+                            System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
                     } else {
                         System.out.println("\nInvalid choice!");
@@ -180,14 +222,30 @@ public class Main {
 
                         // if account already exists print out error message
                         if (isFoundAdmin) {
-                            System.out.println("\nAccount already exists!");
+                            failedPrompt = "\n\nAccount already exists!";
+                            for (int i = 0; i < failedPrompt.length(); i++) {
+                                System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                                try {
+                                    Thread.sleep(30);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
                             continue;
                         }
 
                         // create admin account
                         Administrator admin = new Administrator(adminID, adminPassword);
                         admin.createAccount(adminName);
-                        System.out.println("\nAccount created successfully!");
+                        successfulPrompt = "\n\nAccount created successfully!";
+                        for (int i = 0; i < successfulPrompt.length(); i++) {
+                            System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
+                            try {
+                                Thread.sleep(30);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
                     } else {
@@ -212,9 +270,9 @@ public class Main {
 
                 // exit program
                 if (exit == 'Y') {
-                    String text = "\nThank you for using the Student Management System!";
-                    for (int i = 0; i < text.length(); i++) {
-                        System.out.print(text.charAt(i));
+                    successfulPrompt = "\nThank you for using the Student Management System!";
+                    for (int i = 0; i < successfulPrompt.length(); i++) {
+                        System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
                         try {
                             Thread.sleep(10);
                         } catch (InterruptedException e) {
@@ -254,7 +312,7 @@ public class Main {
 
             // loop until password and confirm password variable value is the same
             while (!password.equals(confirmPassword)) {
-                System.out.println("\nPasswords do not match!");
+                System.out.printf("\u001B[31m" + "\n\nPasswords do not match!" + "\u001B[0m");
                 System.out.print("Enter your password: ");
                 password = strInput.nextLine();
 
@@ -269,7 +327,15 @@ public class Main {
 
             // if account already exists print out error message
             if (isFound) {
-                System.out.println("\nAccount already exists!");
+                failedPrompt = "\n\nAccount already exists!";
+                for (int i = 0; i < failedPrompt.length(); i++) {
+                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 intInput.close();
                 strInput.close();
                 return;
@@ -277,7 +343,15 @@ public class Main {
 
             // if user input is not S, or L print out error message
             if (userType != 'S' && userType != 'L') {
-                System.out.println("\nInvalid user type!");
+                failedPrompt = "\n\nInvalid user type!";
+                for (int i = 0; i < failedPrompt.length(); i++) {
+                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                    try {
+                        Thread.sleep(30);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 intInput.close();
                 strInput.close();
                 return;
@@ -315,7 +389,15 @@ public class Main {
                 } else if (classChoiceInt == 3) {
                     classChoice = "RCDCS1102C";
                 } else {
-                    System.out.println("\nInvalid choice!");
+                    failedPrompt = "\n\nInvalid choice!";
+                    for (int i = 0; i < failedPrompt.length(); i++) {
+                        System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                        try {
+                            Thread.sleep(30);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     intInput.close();
                     strInput.close();
                     return;
