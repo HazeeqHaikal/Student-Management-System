@@ -103,7 +103,6 @@ public class Lecturer extends User {
         BufferedReader br = null;
         String line = "";
         String[] data = null;
-        String[] newData = null;
         String newLine = "";
         try {
             br = new BufferedReader(new FileReader("database/student.txt"));

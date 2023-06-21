@@ -137,37 +137,90 @@ public class Main {
                         System.out.println("\n");
                         System.out.println(studentInfo);
 
-                        System.out.print("\nEnter the student's ID: ");
-                        String studentID = strInput.nextLine();
+                        System.out.print("Do you want to edit multiple people? (Y/N): ");
+                        char editMultiple = strInput.nextLine().charAt(0);
+                        editMultiple = Character.toUpperCase(editMultiple);
 
-                        System.out.print("Enter the student's marks: ");
-                        int studentMarks = intInput.nextInt();
+                        if (editMultiple == 'N') {
 
-                        boolean isFoundStudent = lecturer.findStudent(studentID);
+                            System.out.print("\nEnter the student's ID: ");
+                            String studentID = strInput.nextLine();
 
-                        // if student doesn't exist print out error message
-                        if (!isFoundStudent) {
-                            failedPrompt = "\n\nStudent not found!";
-                            for (int i = 0; i < failedPrompt.length(); i++) {
-                                System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                            System.out.print("Enter the student's marks: ");
+                            int studentMarks = intInput.nextInt();
+
+                            boolean isFoundStudent = lecturer.findStudent(studentID);
+
+                            // if student doesn't exist print out error message
+                            if (!isFoundStudent) {
+                                failedPrompt = "\n\nStudent not found!";
+                                for (int i = 0; i < failedPrompt.length(); i++) {
+                                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
+                                    try {
+                                        Thread.sleep(30);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                continue;
+                            }
+
+                            // add student's grade
+                            lecturer.addGrade(studentID, studentMarks);
+                            successfulPrompt = "\nGrade added successfully!";
+                            for (int i = 0; i < successfulPrompt.length(); i++) {
+                                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
                                 try {
                                     Thread.sleep(30);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
                             }
-                            continue;
-                        }
+                        } else if (editMultiple == 'Y') {
+                            System.out.print("\nEnter matric number of students you want to edit split by commas: ");
+                            String[] studentIDs = strInput.nextLine().split(",");
+                            // trim the spaces
+                            for (int i = 0; i < studentIDs.length; i++) {
+                                studentIDs[i] = studentIDs[i].trim();
+                            }
+                            Student[] student = new Student[studentIDs.length];
 
-                        // add student's grade
-                        lecturer.addGrade(studentID, studentMarks);
-                        successfulPrompt = "\n\nGrade added successfully!";
-                        for (int i = 0; i < successfulPrompt.length(); i++) {
-                            System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                            try {
-                                Thread.sleep(30);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                            for (int i = 0; i < studentIDs.length; i++) {
+                                student[i] = new Student(studentIDs[i], "", data[2]);
+
+                                boolean isFoundStudent = lecturer.findStudent(studentIDs[i]);
+
+                                // if student doesn't exist print out error message
+                                if (!isFoundStudent) {
+                                    failedPrompt = "\n\nStudent not found!";
+                                    for (int j = 0; j < failedPrompt.length(); j++) {
+                                        System.out.printf("\u001B[31m" + failedPrompt.charAt(j) + "\u001B[0m");
+                                        try {
+                                            Thread.sleep(30);
+                                        } catch (InterruptedException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    continue;
+                                }
+
+                                System.out.print("Enter the " + student[i].getMatricNo() + "'s marks: ");
+                                int studentMarks = intInput.nextInt();
+
+                                // add student's grade
+                                lecturer.addGrade(studentIDs[i], studentMarks);
+                                successfulPrompt = "\nGrade added successfully!";
+
+                                for (int j = 0; j < successfulPrompt.length(); j++) {
+                                    System.out.printf("\u001B[32m" + successfulPrompt.charAt(j) + "\u001B[0m");
+                                    try {
+                                        Thread.sleep(30);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                System.out.println();
                             }
                         }
 
@@ -407,11 +460,18 @@ public class Main {
                 lecturer.createAccount(name);
             }
 
-            String successfullPrompt = "\nAccount created successfully!\n\nID: " + ID + "\nPassword: " + password
-                    + "\n\nPress enter to continue...";
+            String successfullPrompt = "\nAccount created successfully!\n\n";
             String[] successfullPromptArray = successfullPrompt.split("");
             for (int i = 0; i < successfullPromptArray.length; i++) {
-                System.out.print(successfullPromptArray[i] + "");
+                System.out.printf("\u001B[32m" + successfullPromptArray[i] + "\u001B[0m");
+                Thread.sleep(30);
+            }
+
+            System.out.println("ID: " + ID + "\nPassword: " + password);
+
+            successfulPrompt = "\nPress enter to continue...";
+            for (int i = 0; i < successfulPrompt.length(); i++) {
+                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
                 Thread.sleep(30);
             }
             System.in.read();
