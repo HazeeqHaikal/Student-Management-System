@@ -42,6 +42,7 @@ public class Lecturer extends User {
         this.classTeach = classTeach;
     }
 
+    // method to get student's grade
     public String getStudentsGrade(String[] lecturerFile) {
         BufferedReader br = null;
 
@@ -72,6 +73,7 @@ public class Lecturer extends User {
         return studentGrade;
     }
 
+    // method to verify if the student exists
     public boolean findStudent(String studentID) {
         BufferedReader br = null;
         boolean found = false;
@@ -96,6 +98,7 @@ public class Lecturer extends User {
         return found;
     }
 
+    // method to add grade to student
     public void addGrade(String studentID, int marks) {
         BufferedReader br = null;
         String line = "";

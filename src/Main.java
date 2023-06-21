@@ -216,7 +216,7 @@ public class Main {
                     for (int i = 0; i < text.length(); i++) {
                         System.out.print(text.charAt(i));
                         try {
-                            Thread.sleep(20);
+                            Thread.sleep(10);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
