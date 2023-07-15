@@ -10,6 +10,13 @@ public class Lecturer extends User {
     private String password;
     private String classTeach;
 
+    // default constructor
+    public Lecturer() throws Exception {
+        super("", "");
+        this.classTeach = "";
+        this.passwordManager = new PasswordManager("");
+    }
+
     // normal constructor
     public Lecturer(String staffId, String password, String classTeach) throws Exception {
         super(staffId, password);
@@ -160,52 +167,11 @@ public class Lecturer extends User {
         return grade;
     }
 
-    public double calcAverageMarks() {
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line = "";
-        double totalMarks = 0;
-        int studentCount = 0;
-        // double averageMarks = 0;
-
-        try {
-            while ((line = br.readLine()) != null) {
-                String[] data = line.split(";");
-                int marks = Integer.parseInt(data[4]);
-                totalMarks += marks;
-                studentCount++;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        double averageMarks = totalMarks / studentCount;
-
-        return averageMarks;
-    }
-
-    // public double calcTotalMarks() {
-    // double totalMarks = 0;
-    // for (int i = 0; i < students.length; i++) {
-    // // totalMarks += students[i].getSubMarks();
-    // }
-    // return totalMarks;
-    // }
 
     // toString method
     @Override
     public String toString() {
         return "Staff " + super.toString();
-        // output += "Total Marks: " + calcTotalMarks() + "\n";
-        // output += "Average Marks: " + calcAverageMarks() + "\n";
-        // output += "Student List: \n";
-        // for (int i = 0; i < students.length; i++) {
-        // output += students[i].generateOutput() + "\n";
-        // }
     }
 
 }

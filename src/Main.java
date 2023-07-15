@@ -5,9 +5,9 @@ public class Main {
         Scanner intInput = new Scanner(System.in);
         Scanner strInput = new Scanner(System.in);
         PasswordManager passwordManager = null;
-        String successfulPrompt = "";
-        String failedPrompt = "";
-
+        Student student = new Student("", "", "");
+        Lecturer lecturer = new Lecturer("", "", "");
+        
         System.out.println("Welcome to the Student Management System!");
 
         System.out.print("\nDo you want to login (L), register (R) or exit (E)?: ");
@@ -27,15 +27,7 @@ public class Main {
 
         // exit program
         if (loginOrRegister == 'E') {
-            successfulPrompt = "\nThank you for using the Student Management System!";
-            for (int i = 0; i < successfulPrompt.length(); i++) {
-                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            ((User) student).greenText("\nThank you for using the Student Management System!");
             intInput.close();
             strInput.close();
             return;
@@ -58,15 +50,8 @@ public class Main {
             System.out.flush();
             // if account doesn't exist in any of the files print out error message
             if (!isFound) {
-                failedPrompt = "\n\nAccount not found!";
-                for (int i = 0; i < failedPrompt.length(); i++) {
-                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                ((User) student).redText("\n\nAccount not found!");
+                // failedPrompt = "\n\nAccount not found!";
                 intInput.close();
                 strInput.close();
                 return;
@@ -74,15 +59,7 @@ public class Main {
 
             // if password is wrong print out error message
             if (!passwordManager.verifyPassword(ID)) {
-                failedPrompt = "\n\nWrong password!";
-                for (int i = 0; i < failedPrompt.length(); i++) {
-                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                ((User) student).redText("\n\nWrong password!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -91,6 +68,7 @@ public class Main {
             // welcome message with their name from the txt file
             System.out.println("\nWelcome " + data[0] + "!\n");
 
+            // loop until user enters E to exit
             while (loginOrRegister != 'E') {
                 // if account is a student
                 if (typeAccount == 'S') {
@@ -102,7 +80,7 @@ public class Main {
                     if (choice == 1) {
                         System.out.println("\nYour password is: " + passwordManager.getDecryptedPassword());
                     } else if (choice == 2) {
-                        Student student = new Student(ID, password, data[2]);
+                        student = new Student(ID, password, data[2]);
                         System.out.println("\nYour marks are: " + data[3]);
                         System.out.println("Your grade is: " + student.calcGrade(Integer.parseInt(data[3])));
                     } else {
@@ -112,7 +90,7 @@ public class Main {
 
                 // if account is a lecturer
                 else if (typeAccount == 'L') {
-                    Lecturer lecturer = new Lecturer(ID, password, data[2]);
+                    lecturer = new Lecturer(ID, password, data[2]);
                     String studentInfo = lecturer.getStudentsGrade(data);
 
                     System.out.print(
@@ -153,29 +131,13 @@ public class Main {
 
                             // if student doesn't exist print out error message
                             if (!isFoundStudent) {
-                                failedPrompt = "\n\nStudent not found!";
-                                for (int i = 0; i < failedPrompt.length(); i++) {
-                                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                                ((User) lecturer).redText("\n\nStudent not found!");
                                 continue;
                             }
 
                             // add student's grade
                             lecturer.addGrade(studentID, studentMarks);
-                            successfulPrompt = "\nGrade added successfully!";
-                            for (int i = 0; i < successfulPrompt.length(); i++) {
-                                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                                try {
-                                    Thread.sleep(30);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            ((User) lecturer).greenText("\n\nGrade added successfully!");
                         } else if (editMultiple == 'Y') {
                             System.out.print("\nEnter matric number of students you want to edit split by commas: ");
                             String[] studentIDs = strInput.nextLine().split(",");
@@ -183,42 +145,25 @@ public class Main {
                             for (int i = 0; i < studentIDs.length; i++) {
                                 studentIDs[i] = studentIDs[i].trim();
                             }
-                            Student[] student = new Student[studentIDs.length];
+                            Student[] studentArray = new Student[studentIDs.length];
 
                             for (int i = 0; i < studentIDs.length; i++) {
-                                student[i] = new Student(studentIDs[i], "", data[2]);
+                                studentArray[i] = new Student(studentIDs[i], "", data[2]);
 
                                 boolean isFoundStudent = lecturer.findStudent(studentIDs[i]);
 
                                 // if student doesn't exist print out error message
                                 if (!isFoundStudent) {
-                                    failedPrompt = "\n\nStudent not found!";
-                                    for (int j = 0; j < failedPrompt.length(); j++) {
-                                        System.out.printf("\u001B[31m" + failedPrompt.charAt(j) + "\u001B[0m");
-                                        try {
-                                            Thread.sleep(30);
-                                        } catch (InterruptedException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
+                                    ((User) lecturer).redText("\n\nStudent not found!");
                                     continue;
                                 }
 
-                                System.out.print("Enter the " + student[i].getMatricNo() + "'s marks: ");
+                                System.out.print("Enter the " + studentArray[i].getMatricNo() + "'s marks: ");
                                 int studentMarks = intInput.nextInt();
 
                                 // add student's grade
                                 lecturer.addGrade(studentIDs[i], studentMarks);
-                                successfulPrompt = "\nGrade added successfully!";
-
-                                for (int j = 0; j < successfulPrompt.length(); j++) {
-                                    System.out.printf("\u001B[32m" + successfulPrompt.charAt(j) + "\u001B[0m");
-                                    try {
-                                        Thread.sleep(30);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
+                                ((User) lecturer).greenText("\n\nGrade added successfully!");
 
                                 System.out.println();
                             }
@@ -275,30 +220,14 @@ public class Main {
 
                         // if account already exists print out error message
                         if (isFoundAdmin) {
-                            failedPrompt = "\n\nAccount already exists!";
-                            for (int i = 0; i < failedPrompt.length(); i++) {
-                                System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                                try {
-                                    Thread.sleep(30);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
+                            ((User) student).redText("\n\nAccount already exists!");
                             continue;
                         }
 
                         // create admin account
                         Administrator admin = new Administrator(adminID, adminPassword);
                         admin.createAccount(adminName);
-                        successfulPrompt = "\n\nAccount created successfully!";
-                        for (int i = 0; i < successfulPrompt.length(); i++) {
-                            System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                            try {
-                                Thread.sleep(30);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        ((User) admin).greenText("\n\nAccount created successfully!");
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
                     } else {
@@ -323,15 +252,7 @@ public class Main {
 
                 // exit program
                 if (exit == 'Y') {
-                    successfulPrompt = "\nThank you for using the Student Management System!";
-                    for (int i = 0; i < successfulPrompt.length(); i++) {
-                        System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    ((User) lecturer).greenText("\n\nThank you for using the Student Management System!");
                     intInput.close();
                     strInput.close();
                     loginOrRegister = 'E';
@@ -380,15 +301,8 @@ public class Main {
 
             // if account already exists print out error message
             if (isFound) {
-                failedPrompt = "\n\nAccount already exists!";
-                for (int i = 0; i < failedPrompt.length(); i++) {
-                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                student = new Student("", "", "");
+                ((User) student).redText("\n\nAccount already existed!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -396,15 +310,8 @@ public class Main {
 
             // if user input is not S, or L print out error message
             if (userType != 'S' && userType != 'L') {
-                failedPrompt = "\n\nInvalid user type!";
-                for (int i = 0; i < failedPrompt.length(); i++) {
-                    System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                    try {
-                        Thread.sleep(30);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                student = new Student("", "", "");
+                ((User) student).redText("\n\nInvalid user type!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -423,12 +330,12 @@ public class Main {
                 } else if (classChoiceInt == 3) {
                     classChoice = "RCDCS1102C";
                 } else {
-                    System.out.println("\nInvalid choice!");
+                    ((User) student).redText("\n\nInvalid choice!");
                     intInput.close();
                     strInput.close();
                     return;
                 }
-                Student student = new Student(ID, password, classChoice);
+                student = new Student(ID, password, classChoice);
                 student.createAccount(name);
             } else if (userType == 'L') {
                 System.out
@@ -442,38 +349,21 @@ public class Main {
                 } else if (classChoiceInt == 3) {
                     classChoice = "RCDCS1102C";
                 } else {
-                    failedPrompt = "\n\nInvalid choice!";
-                    for (int i = 0; i < failedPrompt.length(); i++) {
-                        System.out.printf("\u001B[31m" + failedPrompt.charAt(i) + "\u001B[0m");
-                        try {
-                            Thread.sleep(30);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
+                    ((User) lecturer).redText("\n\nInvalid choice!");
                     intInput.close();
                     strInput.close();
                     return;
                 }
 
-                Lecturer lecturer = new Lecturer(ID, password, classChoice);
+                lecturer = new Lecturer(ID, password, classChoice);
                 lecturer.createAccount(name);
             }
 
-            String successfullPrompt = "\nAccount created successfully!\n\n";
-            String[] successfullPromptArray = successfullPrompt.split("");
-            for (int i = 0; i < successfullPromptArray.length; i++) {
-                System.out.printf("\u001B[32m" + successfullPromptArray[i] + "\u001B[0m");
-                Thread.sleep(30);
-            }
-
-            System.out.println("ID: " + ID + "\nPassword: " + password);
-
-            successfulPrompt = "\nPress enter to continue...";
-            for (int i = 0; i < successfulPrompt.length(); i++) {
-                System.out.printf("\u001B[32m" + successfulPrompt.charAt(i) + "\u001B[0m");
-                Thread.sleep(30);
-            }
+            // casting student or lecturer object to user object
+            User user = (User) (userType == 'S' ? student : lecturer);
+            user.greenText("\n\nAccount created successfully!");
+            System.out.println("\nID: " + ID + "\nPassword: " + password);
+            user.greenText("\nPress enter to continue...");
             System.in.read();
 
         }
