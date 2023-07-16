@@ -53,12 +53,27 @@ public class Lecturer extends User {
     public String getStudentsGrade(String[] lecturerFile) {
         String[][] studentData = super.openStudentFile();
         String studentGrade = "";
+<<<<<<< HEAD
         for (int i = 0; i < studentData.length; i++) {
             if (classTeach.equals(studentData[i][2])) {
                 int marks = Integer.parseInt(studentData[i][3]);
                 char grade = calcGrade(marks);
                 studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", studentData[i][1], studentData[i][0],
                         studentData[i][3], grade) + "\n";
+=======
+        try {
+
+            while ((line = br.readLine()) != null) {
+                data = line.split(";");
+                if (classTeach.equals(data[2])) {
+                    int marks = Integer.parseInt(data[3]);
+                    char grade = calcGrade(marks);
+                    studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", data[1], data[0], data[3], grade) + "\n";
+                    // studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", studentData[i][1], studentData[i][0],
+                        // studentData[i][3], grade) + "\n";
+                }
+
+>>>>>>> 075b97ce9aa1785168b89b19a679cce80d5feef8
             }
         }
 

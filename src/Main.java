@@ -108,16 +108,28 @@ public class Main {
                         }
                         System.out.println("\nClass you are teaching: " + data[2] + "\n");
                         System.out.println(
+<<<<<<< HEAD
                                 "|============================================================================|");
                         System.out.printf("| %-12s | %-40s | %-8s | %-5s |", "Matric No.", "Student Name", "Marks",
                                 "Grade");
                         System.out.print(
                                 "\n|============================================================================|");
+=======
+                                "==============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-8s | %-5s |", "Matric No.", "Student Name", "Marks",
+                                "Grade");
+                        System.out.print(
+                                "\n==============================================================================");
+>>>>>>> 075b97ce9aa1785168b89b19a679cce80d5feef8
 
                         System.out.print("\n" + studentInfo);
                         // put = to close the table
                         System.out.print(
+<<<<<<< HEAD
                                 "|============================================================================|\n");
+=======
+                                "==============================================================================\n");
+>>>>>>> 075b97ce9aa1785168b89b19a679cce80d5feef8
 
                     } else if (choice == 3) {
                         System.out.println(
