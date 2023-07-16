@@ -193,52 +193,68 @@ public abstract class User {
         String[][] lecturerInfo = openLecturerFile();
 
         // format admin file
-        String adminFormat = String.format("| %-12s | %-40s |", "Admin ID", "Name");
+        String adminFormat = "===========================================================\n";
+        adminFormat += String.format("| %-12s | %-40s |", "Admin ID", "Name");
+        adminFormat += "\n===========================================================";
         for (int i = 0; i < adminInfo.length; i++) {
             adminFormat += String.format("\n| %-12s | %-40s |", adminInfo[i][1], adminInfo[i][0]);
         }
+        adminFormat += "\n===========================================================";
 
         // format student file
-        String studentFormat = String.format("| %-12s | %-40s | %-10s | %-5s | %-5s |", "Student ID", "Name",
+        String studentFormat = "========================================================================================\n";
+        studentFormat += String.format("| %-12s | %-40s | %-10s | %-5s | %-5s |", "Student ID", "Name",
                 "Class", "Marks", "Grade");
+        studentFormat += "\n========================================================================================";
         for (int i = 0; i < studentInfo.length; i++) {
             Lecturer lecturer = new Lecturer(studentInfo[i][0], "", studentInfo[i][2]);
             char grade = lecturer.calcGrade(Integer.parseInt(studentInfo[i][3]));
             studentFormat += String.format("\n| %-12s | %-40s | %-8s | %-5s | %-5s |", studentInfo[i][1],
-                    studentInfo[i][0], studentInfo[i][2], studentInfo[i][3],  grade);
+                    studentInfo[i][0], studentInfo[i][2], studentInfo[i][3], grade);
         }
+        studentFormat += "\n========================================================================================";
 
         // format lecturer file
-        String lecturerFormat = String.format("| %-12s | %-40s | %-10s |", "Staff ID", "Name", "Class");
+        String lecturerFormat = "=========================================================================\n";
+        lecturerFormat += String.format("| %-12s | %-40s | %-11s |", "Staff ID", "Name", "Class Teach");
+        lecturerFormat += "\n=========================================================================";
         for (int i = 0; i < lecturerInfo.length; i++) {
-            lecturerFormat += String.format("\n| %-12s | %-40s | %-10s |", lecturerInfo[i][1], lecturerInfo[i][0],
+            lecturerFormat += String.format("\n| %-12s | %-40s | %-11s |", lecturerInfo[i][1], lecturerInfo[i][0],
                     lecturerInfo[i][2]);
         }
+        lecturerFormat += "\n=========================================================================";
 
         // write to file
         BufferedWriter bw = null;
+        // try {
+        //     bw = new BufferedWriter(new FileWriter("database/formatOutput.txt"));
+        //     bw.write(adminFormat + "\n\n" + studentFormat + "\n\n" + lecturerFormat);
+        //     bw.close();
+        // } catch (Exception e) {
+        //     System.out.println(e.getMessage());
+        // }
         try {
-            bw = new BufferedWriter(new FileWriter("database/administratorFormat.txt"));
-            bw.write(adminFormat);
-            bw.close();
+        bw = new BufferedWriter(new FileWriter("database/administratorFormat.txt"));
+        bw.write(adminFormat);
+        bw.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        System.out.println(e.getMessage());
         }
 
         try {
-            bw = new BufferedWriter(new FileWriter("database/studentFormat.txt"));
-            bw.write(studentFormat);
-            bw.close();
+        bw = new BufferedWriter(new FileWriter("database/studentFormat.txt"));
+        bw.write(studentFormat);
+        bw.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        System.out.println(e.getMessage());
         }
 
         try {
-            bw = new BufferedWriter(new FileWriter("database/lecturerFormat.txt"));
-            bw.write(lecturerFormat);
-            bw.close();
+        bw = new BufferedWriter(new FileWriter("database/lecturerFormat.txt"));
+        bw.write(lecturerFormat);
+        bw.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+        System.out.println(e.getMessage());
         }
     }
 
