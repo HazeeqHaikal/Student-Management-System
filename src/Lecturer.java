@@ -52,7 +52,6 @@ public class Lecturer extends User {
     // method to get student's grade
     public String getStudentsGrade(String[] lecturerFile) {
         BufferedReader br = null;
-
         try {
             br = new BufferedReader(new FileReader("database/student.txt"));
         } catch (FileNotFoundException e) {
