@@ -51,90 +51,97 @@ public class Lecturer extends User {
 
     // method to get student's grade
     public String getStudentsGrade(String[] lecturerFile) {
-        BufferedReader br = null;
-
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line = "";
-        String[] data = null;
+        String[][] studentData = super.openStudentFile();
         String studentGrade = "";
-        try {
-
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (classTeach.equals(data[2])) {
-                    int marks = Integer.parseInt(data[3]);
-                    char grade = calcGrade(marks);
-                    studentGrade += String.format("%-12s %-40s %-8s %-8s", data[1], data[0], data[3], grade) + "\n";
-                }
-
+        for (int i = 0; i < studentData.length; i++) {
+            if (classTeach.equals(studentData[i][2])) {
+                int marks = Integer.parseInt(studentData[i][3]);
+                char grade = calcGrade(marks);
+                studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", studentData[i][1], studentData[i][0],
+                        studentData[i][3], grade) + "\n";
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return studentGrade;
+        // BufferedReader br = null;
+
+        // try {
+        // br = new BufferedReader(new FileReader("database/student.txt"));
+        // } catch (FileNotFoundException e) {
+        // e.printStackTrace();
+        // }
+        // String line = "";
+        // String[] data = null;
+        // String studentGrade = "";
+        // try {
+
+        // while ((line = br.readLine()) != null) {
+        // data = line.split(";");
+        // if (classTeach.equals(data[2])) {
+        // int marks = Integer.parseInt(data[3]);
+        // char grade = calcGrade(marks);
+        // studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", data[1],
+        // data[0], data[3], grade)
+        // + "\n";
+        // }
+
+        // }
+
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
+
+        // return studentGrade;
     }
 
     // method to verify if the student exists
     public boolean findStudent(String studentID) {
-        BufferedReader br = null;
-        boolean found = false;
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String[][] studentData = super.openStudentFile();
+        for (int i = 0; i < studentData.length; i++) {
+            if (studentID.equals(studentData[i][1]))
+                return true;
         }
-        String line = "";
-        String[] data = null;
-        try {
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (studentID.equals(data[1])) {
-                    found = true;
-                    break;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return found;
+
+        return false;
     }
 
     // method to add grade to student
     public void addGrade(String studentID, int marks) {
-        BufferedReader br = null;
-        String line = "";
-        String[] data = null;
-        String newLine = "";
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String[][] studentData = super.openStudentFile();
+        for (int i = 0; i < studentData.length; i++) {
+            if (studentID.equals(studentData[i][1]))
+                studentData[i][3] = Integer.toString(marks);
         }
-        try {
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (studentID.equals(data[1]))
-                    data[3] = Integer.toString(marks);
 
-                newLine += data[0] + ";" + data[1] + ";" + data[2] + ";" + data[3] + ";" + data[4] + ";" + data[5]
-                        + "\n";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt"));
-            pw.print(newLine);
-            pw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // BufferedReader br = null;
+        // String line = "";
+        // String[] data = null;
+        // String newLine = "";
+        // try {
+        // br = new BufferedReader(new FileReader("database/student.txt"));
+        // } catch (FileNotFoundException e) {
+        // e.printStackTrace();
+        // }
+        // try {
+        // while ((line = br.readLine()) != null) {
+        // data = line.split(";");
+        // if (studentID.equals(data[1]))
+        // data[3] = Integer.toString(marks);
+
+        // newLine += data[0] + ";" + data[1] + ";" + data[2] + ";" + data[3] + ";" +
+        // data[4] + ";" + data[5]
+        // + "\n";
+        // }
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
+        // try {
+        // PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt"));
+        // pw.print(newLine);
+        // pw.close();
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
     }
 
     // polymorphism
@@ -166,7 +173,6 @@ public class Lecturer extends User {
         }
         return grade;
     }
-
 
     // toString method
     @Override

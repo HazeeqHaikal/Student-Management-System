@@ -7,7 +7,7 @@ public class Main {
         PasswordManager passwordManager = null;
         Student student = new Student("", "", "");
         Lecturer lecturer = new Lecturer("", "", "");
-        
+
         System.out.println("Welcome to the Student Management System!");
 
         System.out.print("\nDo you want to login (L), register (R) or exit (E)?: ");
@@ -107,13 +107,28 @@ public class Main {
                             continue;
                         }
                         System.out.println("\nClass you are teaching: " + data[2] + "\n");
-                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
-                        System.out.println("\n");
-                        System.out.println(studentInfo);
+                        System.out.println(
+                                "|============================================================================|");
+                        System.out.printf("| %-12s | %-40s | %-8s | %-5s |", "Matric No.", "Student Name", "Marks",
+                                "Grade");
+                        System.out.print(
+                                "\n|============================================================================|");
+
+                        System.out.print("\n" + studentInfo);
+                        // put = to close the table
+                        System.out.print(
+                                "|============================================================================|\n");
+
                     } else if (choice == 3) {
-                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
-                        System.out.println("\n");
-                        System.out.println(studentInfo);
+                        System.out.println(
+                                "==============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-8s | %-4s |", "Matric No.", "Student Name", "Marks",
+                                "Grade");
+                        System.out.print(
+                                "\n==============================================================================");
+                        System.out.print("\n" + studentInfo);
+                        System.out.print(
+                                "==============================================================================\n");
 
                         System.out.print("Do you want to edit multiple people? (Y/N): ");
                         char editMultiple = strInput.nextLine().charAt(0);
@@ -286,7 +301,7 @@ public class Main {
 
             // loop until password and confirm password variable value is the same
             while (!password.equals(confirmPassword)) {
-                System.out.printf("\u001B[31m" + "\n\nPasswords do not match!" + "\u001B[0m");
+                ((User) student).redText("\n\nPasswords do not match!");
                 System.out.print("Enter your password: ");
                 password = strInput.nextLine();
 
