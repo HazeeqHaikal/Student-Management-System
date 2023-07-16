@@ -107,13 +107,28 @@ public class Main {
                             continue;
                         }
                         System.out.println("\nClass you are teaching: " + data[2] + "\n");
-                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
-                        System.out.println("\n");
-                        System.out.println(studentInfo);
+                        System.out.println(
+                                "==============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-8s | %-5s |", "Matric No.", "Student Name", "Marks",
+                                "Grade");
+                        System.out.print(
+                                "\n==============================================================================");
+
+                        System.out.print("\n" + studentInfo);
+                        // put = to close the table
+                        System.out.print(
+                                "==============================================================================\n");
+
                     } else if (choice == 3) {
-                        System.out.printf("%-12s %-40s %-8s %-8s", "Matric No.", "Student Name", "Marks", "Grade");
-                        System.out.println("\n");
-                        System.out.println(studentInfo);
+                        System.out.println(
+                                "==============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-8s | %-4s |", "Matric No.", "Student Name", "Marks",
+                                "Grade");
+                        System.out.print(
+                                "\n==============================================================================");
+                        System.out.print("\n" + studentInfo);
+                        System.out.print(
+                                "==============================================================================\n");
 
                         System.out.print("Do you want to edit multiple people? (Y/N): ");
                         char editMultiple = strInput.nextLine().charAt(0);
