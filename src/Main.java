@@ -50,7 +50,7 @@ public class Main {
             System.out.flush();
             // if account doesn't exist in any of the files print out error message
             if (!isFound) {
-                ((User) student).redText("\n\nAccount not found!");
+                ((User) student).redText("\nAccount not found!");
                 // failedPrompt = "\n\nAccount not found!";
                 intInput.close();
                 strInput.close();
@@ -59,7 +59,7 @@ public class Main {
 
             // if password is wrong print out error message
             if (!passwordManager.verifyPassword(ID)) {
-                ((User) student).redText("\n\nWrong password!");
+                ((User) student).redText("\nWrong password!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -130,7 +130,7 @@ public class Main {
                         System.out.print(
                                 "==============================================================================\n");
 
-                        System.out.print("Do you want to edit multiple people? (Y/N): ");
+                        System.out.print("\nDo you want to edit multiple people? (Y/N): ");
                         char editMultiple = strInput.nextLine().charAt(0);
                         editMultiple = Character.toUpperCase(editMultiple);
 
@@ -146,13 +146,13 @@ public class Main {
 
                             // if student doesn't exist print out error message
                             if (!isFoundStudent) {
-                                ((User) lecturer).redText("\n\nStudent not found!");
+                                ((User) lecturer).redText("\nStudent not found!");
                                 continue;
                             }
 
                             // add student's grade
                             lecturer.addGrade(studentID, studentMarks);
-                            ((User) lecturer).greenText("\n\nGrade added successfully!");
+                            ((User) lecturer).greenText("\nGrade added successfully!");
                         } else if (editMultiple == 'Y') {
                             System.out.print("\nEnter matric number of students you want to edit split by commas: ");
                             String[] studentIDs = strInput.nextLine().split(",");
@@ -169,16 +169,16 @@ public class Main {
 
                                 // if student doesn't exist print out error message
                                 if (!isFoundStudent) {
-                                    ((User) lecturer).redText("\n\nStudent not found!");
+                                    ((User) lecturer).redText("\nStudent not found!");
                                     continue;
                                 }
 
-                                System.out.print("Enter the " + studentArray[i].getMatricNo() + "'s marks: ");
+                                System.out.print("Enter the " + studentIDs[i] + "'s marks: ");
                                 int studentMarks = intInput.nextInt();
 
                                 // add student's grade
                                 lecturer.addGrade(studentIDs[i], studentMarks);
-                                ((User) lecturer).greenText("\n\nGrade added successfully!");
+                                ((User) lecturer).greenText("\nGrade added successfully!");
 
                                 System.out.println();
                             }
@@ -193,7 +193,7 @@ public class Main {
                 // if account is an admin
                 else if (typeAccount == 'A') {
                     System.out.print(
-                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n\nEnter your choice: ");
+                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n4. Format text file\n\nEnter your choice: ");
 
                     int choice = intInput.nextInt();
 
@@ -235,22 +235,26 @@ public class Main {
 
                         // if account already exists print out error message
                         if (isFoundAdmin) {
-                            ((User) student).redText("\n\nAccount already exists!");
+                            ((User) student).redText("\nAccount already exists!");
                             continue;
                         }
 
                         // create admin account
                         Administrator admin = new Administrator(adminID, adminPassword);
                         admin.createAccount(adminName);
-                        ((User) admin).greenText("\n\nAccount created successfully!");
+                        ((User) admin).greenText("\nAccount created successfully!");
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
+                    } else if(choice == 4) {
+                        System.out.println("\nFormatting text file...");
+                        ((User) student).formatTextFile();
+                        ((User) student).greenText("\nText file formatted successfully!");
                     } else {
                         System.out.println("\nInvalid choice!");
                     }
                 }
 
-                System.out.print("\nDo you want to exit? (Y/N): ");
+                System.out.print("Do you want to exit? (Y/N): ");
                 char exit = strInput.nextLine().charAt(0);
                 exit = Character.toUpperCase(exit);
 
@@ -267,7 +271,7 @@ public class Main {
 
                 // exit program
                 if (exit == 'Y') {
-                    ((User) lecturer).greenText("\n\nThank you for using the Student Management System!");
+                    ((User) lecturer).greenText("\nThank you for using the Student Management System!");
                     intInput.close();
                     strInput.close();
                     loginOrRegister = 'E';
@@ -317,7 +321,7 @@ public class Main {
             // if account already exists print out error message
             if (isFound) {
                 student = new Student("", "", "");
-                ((User) student).redText("\n\nAccount already existed!");
+                ((User) student).redText("\nAccount already existed!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -326,7 +330,7 @@ public class Main {
             // if user input is not S, or L print out error message
             if (userType != 'S' && userType != 'L') {
                 student = new Student("", "", "");
-                ((User) student).redText("\n\nInvalid user type!");
+                ((User) student).redText("\nInvalid user type!");
                 intInput.close();
                 strInput.close();
                 return;
@@ -345,7 +349,7 @@ public class Main {
                 } else if (classChoiceInt == 3) {
                     classChoice = "RCDCS1102C";
                 } else {
-                    ((User) student).redText("\n\nInvalid choice!");
+                    ((User) student).redText("\nInvalid choice!");
                     intInput.close();
                     strInput.close();
                     return;
@@ -364,7 +368,7 @@ public class Main {
                 } else if (classChoiceInt == 3) {
                     classChoice = "RCDCS1102C";
                 } else {
-                    ((User) lecturer).redText("\n\nInvalid choice!");
+                    ((User) lecturer).redText("\nInvalid choice!");
                     intInput.close();
                     strInput.close();
                     return;
@@ -376,7 +380,7 @@ public class Main {
 
             // casting student or lecturer object to user object
             User user = (User) (userType == 'S' ? student : lecturer);
-            user.greenText("\n\nAccount created successfully!");
+            user.greenText("\nAccount created successfully!");
             System.out.println("\nID: " + ID + "\nPassword: " + password);
             user.greenText("\nPress enter to continue...");
             System.in.read();

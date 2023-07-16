@@ -42,6 +42,7 @@ public class Administrator extends User {
         pw.close();
     }
 
+
     // where output is generated
     @Override
     public String toString() {

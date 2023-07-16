@@ -1,0 +1,3 @@
+| Staff ID     | Name                                     | Class      |
+| 1980765431   | DIANA SURMIYANIE BINTI MOHD NASIR        | RCDCS1102B |
+| 9340589534   | MOHD NIZAM BIN OSMAN                     | RCDCS1102A |

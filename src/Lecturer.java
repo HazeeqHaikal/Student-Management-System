@@ -1,6 +1,4 @@
 import java.io.*;
-// import java.util.*;
-// import javax.crypto.SecretKey;
 
 public class Lecturer extends User {
 
@@ -51,29 +49,15 @@ public class Lecturer extends User {
 
     // method to get student's grade
     public String getStudentsGrade(String[] lecturerFile) {
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line = "";
-        String[] data = null;
+        String[][] studentInfo = openStudentFile();
         String studentGrade = "";
-        try {
-
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (classTeach.equals(data[2])) {
-                    int marks = Integer.parseInt(data[3]);
-                    char grade = calcGrade(marks);
-                    studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", data[1], data[0], data[3], grade) + "\n";
-                }
-
+        for (int i = 0; i < studentInfo.length; i++) {
+            if (classTeach.equals(studentInfo[i][2])) {
+                int marks = Integer.parseInt(studentInfo[i][3]);
+                char grade = calcGrade(marks);
+                studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", studentInfo[i][1], studentInfo[i][0],
+                        studentInfo[i][3], grade) + "\n";
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return studentGrade;
@@ -81,52 +65,31 @@ public class Lecturer extends User {
 
     // method to verify if the student exists
     public boolean findStudent(String studentID) {
-        BufferedReader br = null;
+        String[][] studentInfo = openStudentFile();
         boolean found = false;
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line = "";
-        String[] data = null;
-        try {
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (studentID.equals(data[1])) {
-                    found = true;
-                    break;
-                }
+        for (int i = 0; i < studentInfo.length; i++) {
+            if (studentID.equals(studentInfo[i][1])) {
+                found = true;
+                break;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return found;
     }
 
     // method to add grade to student
     public void addGrade(String studentID, int marks) {
-        BufferedReader br = null;
-        String line = "";
-        String[] data = null;
-        String newLine = "";
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        String[][] studentInfo = openStudentFile();
+        for (int i = 0; i < studentInfo.length; i++) {
+            if (studentID.equals(studentInfo[i][1]))
+                studentInfo[i][3] = Integer.toString(marks);
         }
-        try {
-            while ((line = br.readLine()) != null) {
-                data = line.split(";");
-                if (studentID.equals(data[1]))
-                    data[3] = Integer.toString(marks);
 
-                newLine += data[0] + ";" + data[1] + ";" + data[2] + ";" + data[3] + ";" + data[4] + ";" + data[5]
-                        + "\n";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String newLine = "";
+        for (int i = 0; i < studentInfo.length; i++) {
+            newLine += studentInfo[i][0] + ";" + studentInfo[i][1] + ";" + studentInfo[i][2] + ";" + studentInfo[i][3]
+                    + ";" + studentInfo[i][4] + ";" + studentInfo[i][5] + "\n";
         }
+
         try {
             PrintWriter pw = new PrintWriter(new FileWriter("database/student.txt"));
             pw.print(newLine);
@@ -165,7 +128,6 @@ public class Lecturer extends User {
         }
         return grade;
     }
-
 
     // toString method
     @Override
