@@ -69,8 +69,6 @@ public class Lecturer extends User {
                     int marks = Integer.parseInt(data[3]);
                     char grade = calcGrade(marks);
                     studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", data[1], data[0], data[3], grade) + "\n";
-                    // studentGrade += String.format("| %-12s | %-40s | %-8s | %-5s |", studentData[i][1], studentData[i][0],
-                        // studentData[i][3], grade) + "\n";
                 }
 
             }
