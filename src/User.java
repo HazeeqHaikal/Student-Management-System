@@ -39,44 +39,6 @@ public abstract class User {
     // abstract method
     public abstract void createAccount(String name) throws IOException;
 
-    // open student txt file and return in 2d array
-    public String[][] openStudentFile() {
-        // open file
-        BufferedReader br = null;
-        String[][] studentInfo = null;
-        try {
-            br = new BufferedReader(new FileReader("database/student.txt"));
-            int fileLine = Files.lines(Paths.get("database/student.txt")).toArray().length;
-            studentInfo = new String[fileLine][6];
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // read file
-        String line = "";
-        int i = 0;
-        try {
-            while ((line = br.readLine()) != null) {
-                String[] splitLine = line.split(";");
-                for (int j = 0; j < splitLine.length; j++) {
-                    studentInfo[i][j] = splitLine[j];
-                }
-                i++;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // close file
-        try {
-            br.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return studentInfo;
-    }
-
     // write to student txt file
     public void writeStudentFile(String[][] studentInfo) {
         // open file
@@ -110,15 +72,18 @@ public abstract class User {
         }
     }
 
-    // open lecturer txt file and return in 2d array
-    public String[][] openLecturerFile() {
+    // open to either admin, student or lecturer txt file based on the roles
+    public String[][] openFile(String roles) {
         // open file
         BufferedReader br = null;
-        String[][] lecturerInfo = null;
+        String[][] info = null;
         try {
-            br = new BufferedReader(new FileReader("database/lecturer.txt"));
-            int fileLine = Files.lines(Paths.get("database/lecturer.txt")).toArray().length;
-            lecturerInfo = new String[fileLine][6];
+            br = new BufferedReader(new FileReader("database/" + roles + ".txt"));
+            int fileLine = Files.lines(Paths.get("database/" + roles + ".txt")).toArray().length;
+            if (roles.equals("administrator"))
+                info = new String[fileLine][4];
+            else
+                info = new String[fileLine][6];
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -130,7 +95,7 @@ public abstract class User {
             while ((line = br.readLine()) != null) {
                 String[] splitLine = line.split(";");
                 for (int j = 0; j < splitLine.length; j++) {
-                    lecturerInfo[i][j] = splitLine[j];
+                    info[i][j] = splitLine[j];
                 }
                 i++;
             }
@@ -145,92 +110,14 @@ public abstract class User {
             System.out.println(e.getMessage());
         }
 
-        return lecturerInfo;
+        return info;
     }
-
-    // read admin txt file and return in 2d array
-    public String[][] openAdminFile() {
-        // open file
-        BufferedReader br = null;
-        String[][] adminInfo = null;
-        try {
-            br = new BufferedReader(new FileReader("database/administrator.txt"));
-            int fileLine = Files.lines(Paths.get("database/administrator.txt")).toArray().length;
-            adminInfo = new String[fileLine][4];
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // read file
-        String line = "";
-        int i = 0;
-        try {
-            while ((line = br.readLine()) != null) {
-                String[] splitLine = line.split(";");
-                for (int j = 0; j < splitLine.length; j++) {
-                    adminInfo[i][j] = splitLine[j];
-                }
-                i++;
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        // close file
-        try {
-            br.close();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        return adminInfo;
-    }
-
-    // public String[][] openFile(String roles) {
-    //     // open file
-    //     BufferedReader br = null;
-    //     String[][] info = null;
-    //     try {
-    //         br = new BufferedReader(new FileReader("database/" + roles + ".txt"));
-    //         int fileLine = Files.lines(Paths.get("database/" + roles + ".txt")).toArray().length;
-    //         if (roles.equals("administrator"))
-    //             info = new String[fileLine][4];
-    //         else
-    //             info = new String[fileLine][6];
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //     }
-
-    //     // read file
-    //     String line = "";
-    //     int i = 0;
-    //     try {
-    //         while ((line = br.readLine()) != null) {
-    //             String[] splitLine = line.split(";");
-    //             for (int j = 0; j < splitLine.length; j++) {
-    //                 info[i][j] = splitLine[j];
-    //             }
-    //             i++;
-    //         }
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //     }
-
-    //     // close file
-    //     try {
-    //         br.close();
-    //     } catch (Exception e) {
-    //         System.out.println(e.getMessage());
-    //     }
-
-    //     return info;
-    // }
 
     // format all text file into a table format
     public void formatTextFile() throws Exception {
-        String[][] adminInfo = openAdminFile();
-        String[][] studentInfo = openStudentFile();
-        String[][] lecturerInfo = openLecturerFile();
+        String[][] adminInfo = openFile("administrator");
+        String[][] studentInfo = openFile("student");
+        String[][] lecturerInfo = openFile("lecturer");
 
         // format admin file
         String adminFormat = "===========================================================\n";
@@ -273,29 +160,6 @@ public abstract class User {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        // try {
-        // bw = new BufferedWriter(new FileWriter("database/administratorFormat.txt"));
-        // bw.write(adminFormat);
-        // bw.close();
-        // } catch (Exception e) {
-        // System.out.println(e.getMessage());
-        // }
-
-        // try {
-        // bw = new BufferedWriter(new FileWriter("database/studentFormat.txt"));
-        // bw.write(studentFormat);
-        // bw.close();
-        // } catch (Exception e) {
-        // System.out.println(e.getMessage());
-        // }
-
-        // try {
-        // bw = new BufferedWriter(new FileWriter("database/lecturerFormat.txt"));
-        // bw.write(lecturerFormat);
-        // bw.close();
-        // } catch (Exception e) {
-        // System.out.println(e.getMessage());
-        // }
     }
 
     public String openFormat() {
@@ -316,9 +180,9 @@ public abstract class User {
 
     public void removeAccount(String id) {
         // open file
-        String[][] adminInfo = openAdminFile();
-        String[][] studentInfo = openStudentFile();
-        String[][] lecturerInfo = openLecturerFile();
+        String[][] adminInfo = openFile("administrator");
+        String[][] studentInfo = openFile("student");
+        String[][] lecturerInfo = openFile("lecturer");
         String accountType = "";
 
         // remove account
@@ -328,7 +192,7 @@ public abstract class User {
                 adminInfo[i][1] = "";
                 adminInfo[i][2] = "";
                 adminInfo[i][3] = "";
-                accountType = "admin";
+                accountType = "administrator";
                 break;
             }
         }
@@ -360,46 +224,39 @@ public abstract class User {
 
         // write to file
         BufferedWriter bw = null;
-        if (accountType.equals("admin")) {
-            try {
-                bw = new BufferedWriter(new FileWriter("database/administrator.txt"));
+        try {
+            bw = new BufferedWriter(new FileWriter("database/" + accountType + ".txt"));
+            if (accountType.equals("administrator")) {
                 for (int i = 0; i < adminInfo.length; i++) {
+                    if (adminInfo[i][0].equals("") && adminInfo[i][1].equals("") && adminInfo[i][2].equals("")
+                            && adminInfo[i][3].equals(""))
+                        continue;
                     bw.write(adminInfo[i][0] + ";" + adminInfo[i][1] + ";" + adminInfo[i][2] + ";" + adminInfo[i][3]);
                     bw.newLine();
                 }
-                bw.close();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (accountType.equals("student")) {
-            try {
-                bw = new BufferedWriter(new FileWriter("database/student.txt"));
-                for (int i = 0; i < studentInfo.length; i++) {
-                    if (studentInfo[i][0].equals("") && studentInfo[i][1].equals("") && studentInfo[i][2].equals("")
-                            && studentInfo[i][3].equals("") && studentInfo[i][4].equals("")
-                            && studentInfo[i][5].equals("")) {
-                        continue;
-                    }
-                    bw.write(studentInfo[i][0] + ";" + studentInfo[i][1] + ";" + studentInfo[i][2] + ";"
-                            + studentInfo[i][3] + ";" + studentInfo[i][4] + ";" + studentInfo[i][5]);
-                    bw.newLine();
-                }
-                bw.close();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        } else if (accountType.equals("lecturer")) {
-            try {
-                bw = new BufferedWriter(new FileWriter("database/lecturer.txt"));
+            } else if (accountType.equals("lecturer")) {
                 for (int i = 0; i < lecturerInfo.length; i++) {
+                    if (lecturerInfo[i][0].equals("") && lecturerInfo[i][1].equals("") && lecturerInfo[i][2].equals("")
+                            && lecturerInfo[i][3].equals("") && lecturerInfo[i][4].equals(""))
+                        continue;
                     bw.write(lecturerInfo[i][0] + ";" + lecturerInfo[i][1] + ";" + lecturerInfo[i][2] + ";"
                             + lecturerInfo[i][3] + ";" + lecturerInfo[i][4]);
                     bw.newLine();
                 }
-                bw.close();
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } else if (accountType.equals("student")) {
+                for (int i = 0; i < studentInfo.length; i++) {
+                    if (studentInfo[i][0].equals("") && studentInfo[i][1].equals("") && studentInfo[i][2].equals("")
+                            && studentInfo[i][3].equals("") && studentInfo[i][4].equals("")
+                            && studentInfo[i][5].equals(""))
+                        continue;
+                    bw.write(studentInfo[i][0] + ";" + studentInfo[i][1] + ";" + studentInfo[i][2] + ";"
+                            + studentInfo[i][3] + ";" + studentInfo[i][4] + ";" + studentInfo[i][5]);
+                    bw.newLine();
+                }
             }
+            bw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

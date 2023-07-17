@@ -49,7 +49,7 @@ public class Lecturer extends User {
 
     // method to get student's grade
     public String getStudentsGrade(String[] lecturerFile) {
-        String[][] studentInfo = openStudentFile();
+        String[][] studentInfo = openFile("student");
         String studentGrade = "";
         for (int i = 0; i < studentInfo.length; i++) {
             if (classTeach.equals(studentInfo[i][2])) {
@@ -65,7 +65,7 @@ public class Lecturer extends User {
 
     // method to verify if the student exists
     public boolean findStudent(String studentID) {
-        String[][] studentInfo = openStudentFile();
+        String[][] studentInfo = openFile("student");
         boolean found = false;
         for (int i = 0; i < studentInfo.length; i++) {
             if (studentID.equals(studentInfo[i][1])) {
@@ -78,7 +78,7 @@ public class Lecturer extends User {
 
     // method to add grade to student
     public void addGrade(String studentID, int marks) {
-        String[][] studentInfo = openStudentFile();
+        String[][] studentInfo = openFile("student");
         for (int i = 0; i < studentInfo.length; i++) {
             if (studentID.equals(studentInfo[i][1]))
                 studentInfo[i][3] = Integer.toString(marks);

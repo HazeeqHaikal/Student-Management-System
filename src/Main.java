@@ -194,7 +194,7 @@ public class Main {
                 // if account is an admin
                 else if (typeAccount == 'A') {
                     System.out.print(
-                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n4. Remove account\n5.. Format text file\n\nEnter your choice: ");
+                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n4. Remove account\n5. Format text file\n\nEnter your choice: ");
 
                     int choice = intInput.nextInt();
 
@@ -202,10 +202,25 @@ public class Main {
 
                     if (choice == 1) {
                         System.out.println("\nAll student's password\n");
-                        System.out.println(passwordManager.getAllStudentsPassword());
+                        System.out.println(
+                                "============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-14s |", "Matric No.", "Student Name", "Password");
+                        System.out.print(
+                                "\n============================================================================");
+                        System.out.print("\n" + passwordManager.getAllStudentsPassword());
+                        System.out.print(
+                                "============================================================================\n\n");
                     } else if (choice == 2) {
                         System.out.println("\nAll lecturer's password\n");
-                        System.out.println(passwordManager.getAllLecturersPassword());
+                        System.out.println(
+                                "============================================================================");
+                        System.out.printf("| %-12s | %-40s | %-14s |", "Matric No.", "Lecturer Name", "Password");
+                        System.out.print(
+                                "\n============================================================================");
+                        System.out.print("\n" + passwordManager.getAllLecturersPassword());
+                        System.out.print(
+                                "============================================================================\n\n");
+
                     } else if (choice == 3) {
                         System.out.print("Enter the admin's name: ");
                         String adminName = strInput.nextLine();
@@ -244,6 +259,7 @@ public class Main {
                         admin = new Administrator(adminID, adminPassword);
                         admin.createAccount(adminName);
                         ((User) admin).greenText("\nAccount created successfully!");
+                        ((User) admin).formatTextFile();
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
                     } else if (choice == 4) {
@@ -267,12 +283,14 @@ public class Main {
 
                         // remove admin account
                         ((User) admin).removeAccount(removeID);
-                        ((User) admin).greenText("\nAccount removed successfully!");
+                        ((User) admin).greenText("\nAccount removed successfully!\n");
                         ((User) admin).formatTextFile();
                     } else if (choice == 5) {
                         System.out.println("\nFormatting text file...");
                         ((User) admin).formatTextFile();
-                        ((User) admin).greenText("\nText file formatted successfully!");
+                        ((User) admin).greenText("\nText file formatted successfully!\n");
+                        System.out.println("Here is the formatted text file:\n");
+                        System.out.println(((User) admin).openFormat());
                     } else {
                         System.out.println("\nInvalid choice!");
                     }
@@ -301,6 +319,7 @@ public class Main {
                     loginOrRegister = 'E';
                     break;
                 }
+                System.out.println();
             }
         }
 

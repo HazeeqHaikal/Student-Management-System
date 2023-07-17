@@ -179,7 +179,8 @@ public class PasswordManager {
                 byte[] decodedKey = Base64.getDecoder().decode(studentDetails[5]);
                 SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
                 String decryptedPassword = decryptPassword(studentDetails[4], originalKey);
-                password += studentDetails[0] + " - " + decryptedPassword + "\n";
+                password += String.format("| %-12s | %-40s | %-14s |\n", studentDetails[1], studentDetails[0],
+                        decryptedPassword);
                 studentLine = student.readLine();
             }
             student.close();
@@ -200,7 +201,8 @@ public class PasswordManager {
                 byte[] decodedKey = Base64.getDecoder().decode(adminDetails[4]);
                 SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
                 String decryptedPassword = decryptPassword(adminDetails[3], originalKey);
-                password += adminDetails[0] + " - " + decryptedPassword + "\n";
+                password += String.format("| %-12s | %-40s | %-14s |\n", adminDetails[1], adminDetails[0],
+                        decryptedPassword);
                 adminLine = admin.readLine();
             }
             admin.close();
