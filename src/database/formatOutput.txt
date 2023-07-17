@@ -4,20 +4,19 @@
 | 2022676488   | MUHAMMAD HAZEEQ HAIKAL BIN ROSLAN        |
 ===========================================================
 
-========================================================================================
-| Student ID   | Name                                     | Class      | Marks | Grade |
-========================================================================================
-| 2022890052   | MUHAMMAD HAIKAL IMAN BIN MOHD NOR AZMI   | RCDCS1102B | 70    | B     |
-| 2022496998   | MUHAMMAD DANIEL FARHAN BIN AHMAD YUNUS   | RCDCS1102B | 90    | A     |
-| 2022734543   | SYED SUFFI ASYRAF BIN SYED               | RCDCS1102A | 30    | F     |
-| 2022676696   | MUHAMMAD SYAHMI BIN SUHAIRY              | RCDCS1102B | 70    | B     |
-| 2022492718   | ADIB ISYRAFF BIN JUSRI                   | RCDCS1102B | 50    | D     |
-| 2022860006   | MAHADZIR DANIAL BIN MUHAMAD AZHAN        | RCDCS1102B | 80    | A     |
-========================================================================================
-
 =========================================================================
 | Staff ID     | Name                                     | Class Teach |
 =========================================================================
 | 1980765431   | DIANA SURMIYANIE BINTI MOHD NASIR        | RCDCS1102B  |
 | 9340589534   | MOHD NIZAM BIN OSMAN                     | RCDCS1102A  |
 =========================================================================
+
+=========================================================================================
+| Student ID   | Name                                     | Class       | Marks | Grade |
+=========================================================================================
+| 2022890052   | MUHAMMAD HAIKAL IMAN BIN MOHD NOR AZMI   | RCDCS1102B  | 70    | B     |
+| 2022496998   | MUHAMMAD DANIEL FARHAN BIN AHMAD YUNUS   | RCDCS1102B  | 90    | A     |
+| 2022676696   | MUHAMMAD SYAHMI BIN SUHAIRY              | RCDCS1102B  | 70    | B     |
+| 2022492718   | ADIB ISYRAFF BIN JUSRI                   | RCDCS1102B  | 50    | D     |
+| 2022860006   | MAHADZIR DANIAL BIN MUHAMAD AZHAN        | RCDCS1102B  | 80    | A     |
+=========================================================================================

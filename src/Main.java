@@ -7,7 +7,8 @@ public class Main {
         PasswordManager passwordManager = null;
         Student student = new Student("", "", "");
         Lecturer lecturer = new Lecturer("", "", "");
-        
+        Administrator admin = new Administrator("", "");
+
         System.out.println("Welcome to the Student Management System!");
 
         System.out.print("\nDo you want to login (L), register (R) or exit (E)?: ");
@@ -193,7 +194,7 @@ public class Main {
                 // if account is an admin
                 else if (typeAccount == 'A') {
                     System.out.print(
-                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n4. Format text file\n\nEnter your choice: ");
+                            "1. Check all student's password\n2. Check all lecturer's password\n3. Add admin account\n4. Remove account\n5.. Format text file\n\nEnter your choice: ");
 
                     int choice = intInput.nextInt();
 
@@ -240,15 +241,38 @@ public class Main {
                         }
 
                         // create admin account
-                        Administrator admin = new Administrator(adminID, adminPassword);
+                        admin = new Administrator(adminID, adminPassword);
                         admin.createAccount(adminName);
                         ((User) admin).greenText("\nAccount created successfully!");
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
-                    } else if(choice == 4) {
+                    } else if (choice == 4) {
+                        // ((User) admin).openFormat();
+                        System.out.println(((User) admin).openFormat());
+                        System.out.print("Enter the ID of the account you want to remove: ");
+                        String removeID = strInput.nextLine();
+
+                        isFound = passwordManager.findAccount(removeID);
+
+                        if (removeID.equals(ID)) {
+                            ((User) admin).redText("\nYou cannot remove your own account!\n");
+                            continue;
+                        }
+
+                        // if account doesn't exist print out error message
+                        if (!isFound) {
+                            ((User) admin).redText("\nAccount not found!\n");
+                            continue;
+                        }
+
+                        // remove admin account
+                        ((User) admin).removeAccount(removeID);
+                        ((User) admin).greenText("\nAccount removed successfully!");
+                        ((User) admin).formatTextFile();
+                    } else if (choice == 5) {
                         System.out.println("\nFormatting text file...");
-                        ((User) student).formatTextFile();
-                        ((User) student).greenText("\nText file formatted successfully!");
+                        ((User) admin).formatTextFile();
+                        ((User) admin).greenText("\nText file formatted successfully!");
                     } else {
                         System.out.println("\nInvalid choice!");
                     }

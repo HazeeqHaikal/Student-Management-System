@@ -186,6 +186,46 @@ public abstract class User {
         return adminInfo;
     }
 
+    // public String[][] openFile(String roles) {
+    //     // open file
+    //     BufferedReader br = null;
+    //     String[][] info = null;
+    //     try {
+    //         br = new BufferedReader(new FileReader("database/" + roles + ".txt"));
+    //         int fileLine = Files.lines(Paths.get("database/" + roles + ".txt")).toArray().length;
+    //         if (roles.equals("administrator"))
+    //             info = new String[fileLine][4];
+    //         else
+    //             info = new String[fileLine][6];
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
+
+    //     // read file
+    //     String line = "";
+    //     int i = 0;
+    //     try {
+    //         while ((line = br.readLine()) != null) {
+    //             String[] splitLine = line.split(";");
+    //             for (int j = 0; j < splitLine.length; j++) {
+    //                 info[i][j] = splitLine[j];
+    //             }
+    //             i++;
+    //         }
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
+
+    //     // close file
+    //     try {
+    //         br.close();
+    //     } catch (Exception e) {
+    //         System.out.println(e.getMessage());
+    //     }
+
+    //     return info;
+    // }
+
     // format all text file into a table format
     public void formatTextFile() throws Exception {
         String[][] adminInfo = openAdminFile();
@@ -202,17 +242,17 @@ public abstract class User {
         adminFormat += "\n===========================================================";
 
         // format student file
-        String studentFormat = "========================================================================================\n";
-        studentFormat += String.format("| %-12s | %-40s | %-10s | %-5s | %-5s |", "Student ID", "Name",
+        String studentFormat = "=========================================================================================\n";
+        studentFormat += String.format("| %-12s | %-40s | %-11s | %-5s | %-5s |", "Student ID", "Name",
                 "Class", "Marks", "Grade");
-        studentFormat += "\n========================================================================================";
+        studentFormat += "\n=========================================================================================";
         for (int i = 0; i < studentInfo.length; i++) {
             Lecturer lecturer = new Lecturer(studentInfo[i][0], "", studentInfo[i][2]);
             char grade = lecturer.calcGrade(Integer.parseInt(studentInfo[i][3]));
-            studentFormat += String.format("\n| %-12s | %-40s | %-8s | %-5s | %-5s |", studentInfo[i][1],
+            studentFormat += String.format("\n| %-12s | %-40s | %-11s | %-5s | %-5s |", studentInfo[i][1],
                     studentInfo[i][0], studentInfo[i][2], studentInfo[i][3], grade);
         }
-        studentFormat += "\n========================================================================================";
+        studentFormat += "\n=========================================================================================";
 
         // format lecturer file
         String lecturerFormat = "=========================================================================\n";
@@ -226,35 +266,140 @@ public abstract class User {
 
         // write to file
         BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter("database/formatOutput.txt"));
+            bw.write(adminFormat + "\n\n" + lecturerFormat + "\n\n" + studentFormat);
+            bw.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         // try {
-        //     bw = new BufferedWriter(new FileWriter("database/formatOutput.txt"));
-        //     bw.write(adminFormat + "\n\n" + studentFormat + "\n\n" + lecturerFormat);
-        //     bw.close();
+        // bw = new BufferedWriter(new FileWriter("database/administratorFormat.txt"));
+        // bw.write(adminFormat);
+        // bw.close();
         // } catch (Exception e) {
-        //     System.out.println(e.getMessage());
+        // System.out.println(e.getMessage());
         // }
+
+        // try {
+        // bw = new BufferedWriter(new FileWriter("database/studentFormat.txt"));
+        // bw.write(studentFormat);
+        // bw.close();
+        // } catch (Exception e) {
+        // System.out.println(e.getMessage());
+        // }
+
+        // try {
+        // bw = new BufferedWriter(new FileWriter("database/lecturerFormat.txt"));
+        // bw.write(lecturerFormat);
+        // bw.close();
+        // } catch (Exception e) {
+        // System.out.println(e.getMessage());
+        // }
+    }
+
+    public String openFormat() {
+        BufferedReader br = null;
+        String format = "";
         try {
-        bw = new BufferedWriter(new FileWriter("database/administratorFormat.txt"));
-        bw.write(adminFormat);
-        bw.close();
+            br = new BufferedReader(new FileReader("database/formatOutput.txt"));
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                format += line + "\n";
+            }
+            br.close();
         } catch (Exception e) {
-        System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
+        }
+        return format;
+    }
+
+    public void removeAccount(String id) {
+        // open file
+        String[][] adminInfo = openAdminFile();
+        String[][] studentInfo = openStudentFile();
+        String[][] lecturerInfo = openLecturerFile();
+        String accountType = "";
+
+        // remove account
+        for (int i = 0; i < adminInfo.length; i++) {
+            if (adminInfo[i][1].equals(id)) {
+                adminInfo[i][0] = "";
+                adminInfo[i][1] = "";
+                adminInfo[i][2] = "";
+                adminInfo[i][3] = "";
+                accountType = "admin";
+                break;
+            }
         }
 
-        try {
-        bw = new BufferedWriter(new FileWriter("database/studentFormat.txt"));
-        bw.write(studentFormat);
-        bw.close();
-        } catch (Exception e) {
-        System.out.println(e.getMessage());
+        for (int i = 0; i < studentInfo.length; i++) {
+            if (studentInfo[i][1].equals(id)) {
+                studentInfo[i][0] = "";
+                studentInfo[i][1] = "";
+                studentInfo[i][2] = "";
+                studentInfo[i][3] = "";
+                studentInfo[i][4] = "";
+                studentInfo[i][5] = "";
+                accountType = "student";
+                break;
+            }
         }
 
-        try {
-        bw = new BufferedWriter(new FileWriter("database/lecturerFormat.txt"));
-        bw.write(lecturerFormat);
-        bw.close();
-        } catch (Exception e) {
-        System.out.println(e.getMessage());
+        for (int i = 0; i < lecturerInfo.length; i++) {
+            if (lecturerInfo[i][1].equals(id)) {
+                lecturerInfo[i][0] = "";
+                lecturerInfo[i][1] = "";
+                lecturerInfo[i][2] = "";
+                lecturerInfo[i][3] = "";
+                lecturerInfo[i][4] = "";
+                accountType = "lecturer";
+                break;
+            }
+        }
+
+        // write to file
+        BufferedWriter bw = null;
+        if (accountType.equals("admin")) {
+            try {
+                bw = new BufferedWriter(new FileWriter("database/administrator.txt"));
+                for (int i = 0; i < adminInfo.length; i++) {
+                    bw.write(adminInfo[i][0] + ";" + adminInfo[i][1] + ";" + adminInfo[i][2] + ";" + adminInfo[i][3]);
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (accountType.equals("student")) {
+            try {
+                bw = new BufferedWriter(new FileWriter("database/student.txt"));
+                for (int i = 0; i < studentInfo.length; i++) {
+                    if (studentInfo[i][0].equals("") && studentInfo[i][1].equals("") && studentInfo[i][2].equals("")
+                            && studentInfo[i][3].equals("") && studentInfo[i][4].equals("")
+                            && studentInfo[i][5].equals("")) {
+                        continue;
+                    }
+                    bw.write(studentInfo[i][0] + ";" + studentInfo[i][1] + ";" + studentInfo[i][2] + ";"
+                            + studentInfo[i][3] + ";" + studentInfo[i][4] + ";" + studentInfo[i][5]);
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        } else if (accountType.equals("lecturer")) {
+            try {
+                bw = new BufferedWriter(new FileWriter("database/lecturer.txt"));
+                for (int i = 0; i < lecturerInfo.length; i++) {
+                    bw.write(lecturerInfo[i][0] + ";" + lecturerInfo[i][1] + ";" + lecturerInfo[i][2] + ";"
+                            + lecturerInfo[i][3] + ";" + lecturerInfo[i][4]);
+                    bw.newLine();
+                }
+                bw.close();
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
