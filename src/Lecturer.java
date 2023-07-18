@@ -8,13 +8,6 @@ public class Lecturer extends User {
     private String password;
     private String classTeach;
 
-    // default constructor
-    public Lecturer() throws Exception {
-        super("", "");
-        this.classTeach = "";
-        this.passwordManager = new PasswordManager("");
-    }
-
     // normal constructor
     public Lecturer(String staffId, String password, String classTeach) throws Exception {
         super(staffId, password);
@@ -23,28 +16,28 @@ public class Lecturer extends User {
     }
 
     // getter and setter methods
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getStaffID() {
-        return staffId;
     }
 
     public void setStaffID(String staffId) {
         this.staffId = staffId;
     }
 
-    public String getClassTeach() {
-        return classTeach;
-    }
-
     public void setClassTeach(String classTeach) {
         this.classTeach = classTeach;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getStaffID() {
+        return staffId;
+    }
+
+    public String getClassTeach() {
+        return classTeach;
     }
 
     // method to get student's grade

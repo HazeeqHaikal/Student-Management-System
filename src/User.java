@@ -7,12 +7,6 @@ public abstract class User {
     private String ID;
     private String password;
 
-    // default constructor
-    public User() {
-        this.ID = "";
-        this.password = "";
-    }
-
     // normal constructor
     public User(String ID, String password) {
         this.ID = ID;
@@ -20,20 +14,20 @@ public abstract class User {
     }
 
     // getter and setter methods
-    public String getID() {
-        return this.ID;
-    }
-
     public void setID(String ID) {
         this.ID = ID;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getID() {
+        return this.ID;
+    }
+
+    public String getPassword() {
+        return this.password;
     }
 
     // abstract method

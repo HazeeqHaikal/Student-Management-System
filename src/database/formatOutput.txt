@@ -2,6 +2,7 @@
 | Admin ID     | Name                                     |
 ===========================================================
 | 2022676488   | MUHAMMAD HAZEEQ HAIKAL BIN ROSLAN        |
+| 2022674382   | CHE KHAIRUL AZRI BIN CHE ARIZAN          |
 ===========================================================
 
 =========================================================================
@@ -14,7 +15,6 @@
 =========================================================================================
 | Student ID   | Name                                     | Class       | Marks | Grade |
 =========================================================================================
-| 2022890052   | MUHAMMAD HAIKAL IMAN BIN MOHD NOR AZMI   | RCDCS1102B  | 70    | B     |
 | 2022496998   | MUHAMMAD DANIEL FARHAN BIN AHMAD YUNUS   | RCDCS1102B  | 90    | A     |
 | 2022676696   | MUHAMMAD SYAHMI BIN SUHAIRY              | RCDCS1102B  | 40    | E     |
 | 2022860006   | MAHADZIR DANIAL BIN MUHAMAD AZHAN        | RCDCS1102B  | 60    | C     |

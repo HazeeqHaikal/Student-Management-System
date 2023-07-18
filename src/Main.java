@@ -263,7 +263,6 @@ public class Main {
                         System.out.println();
                         System.out.println("ID: " + adminID + "\nPassword: " + adminPassword);
                     } else if (choice == 4) {
-                        // ((User) admin).openFormat();
                         System.out.println(((User) admin).openFormat());
                         System.out.print("Enter the ID of the account you want to remove: ");
                         String removeID = strInput.nextLine();

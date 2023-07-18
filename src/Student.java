@@ -16,14 +16,6 @@ public class Student extends User {
     }
 
     // getter and setter methods
-    public String getMatricNo() {
-        return matricNo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setMatricNo(String matricNo) {
         this.matricNo = matricNo;
     }
@@ -32,12 +24,20 @@ public class Student extends User {
         this.password = password;
     }
 
-    public String getClassIn() {
-        return classIn;
-    }
-
     public void setClassIn(String classIn) {
         this.classIn = classIn;
+    }
+
+    public String getMatricNo() {
+        return matricNo;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getClassIn() {
+        return classIn;
     }
 
     public char calcGrade(int marks) {

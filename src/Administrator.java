@@ -14,20 +14,20 @@ public class Administrator extends User {
     }
 
     // getter and setter methods
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getStaffID() {
-        return staffId;
-    }
-
     public void setStaffID(String staffId) {
         this.staffId = staffId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getStaffID() {
+        return staffId;
     }
 
     // polymorphism
@@ -41,7 +41,6 @@ public class Administrator extends User {
         }
         pw.close();
     }
-
 
     // where output is generated
     @Override

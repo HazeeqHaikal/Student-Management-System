@@ -42,15 +42,15 @@ public class PasswordManager {
     }
 
     // getter and setter methods
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) throws Exception {
         this.password = password;
         this.secretKey = generateSecretKey(password);
         this.encryptedPassword = encryptPassword(password, secretKey);
         this.decryptedPassword = decryptPassword(encryptedPassword, secretKey);
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEncryptedPassword() {
